@@ -22,4 +22,9 @@ public class PacienteController {
                                   @RequestParam(name = "opcion", required = false) String opcion) {
         return aplicacion.historialTurnos(Map.of("id_paciente", idPaciente, "opcion", opcion));
     }
+
+    @GetMapping("/pacienteId/{id}")
+    public Object pacienteById(@PathVariable("id") String id) {
+        return aplicacion.pacienteById(id);
+    }
 }
