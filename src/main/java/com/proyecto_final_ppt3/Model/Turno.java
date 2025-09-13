@@ -1,6 +1,6 @@
 package com.proyecto_final_ppt3.Model;
 
-import com.proyecto_final_ppt3.Model.Enum.Estado;
+import com.proyecto_final_ppt3.Enum.Estado;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
