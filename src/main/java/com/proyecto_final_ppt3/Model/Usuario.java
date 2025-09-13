@@ -1,16 +1,16 @@
 package com.proyecto_final_ppt3.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
+@MappedSuperclass
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,9 +18,12 @@ public class Usuario {
 
     private String nombre;
     private String apellido;
-    private String dni;
+    private Integer dni;
     private String email;
     private String contrasenia;
+    private String tipoUsuario;
+    private Integer telefono;
+    private String avatar;
 
     public boolean login(){
         return false;

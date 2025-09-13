@@ -11,10 +11,6 @@ import java.util.Optional;
 public interface MedicoService {
     Object getTurnosTomadosCSV(String dniMedico);
 
-    ResponseEntity<Medico> insertarMed(UsuarioRequest usuario);
-
-    Optional<Medico> getMedicoEspecialidad(Object medico);
-
     Object medicosById(String med);
 
     Object updateMedico(String id, Map<String, Object> medico);
@@ -25,7 +21,12 @@ public interface MedicoService {
 
     Object getMedico();
 
-    Object updateMedico(Integer id);
-
     Object updatedMedico(MedicoRequest medicoRequest);
+
+
+    ResponseEntity<Medico> insertarMed(UsuarioRequest usuario);
+
+    Optional<Medico> getMedicoEspecialidad(Object medico);
+
+    Object updateMedico(Integer id);
 }

@@ -1,9 +1,15 @@
 package com.proyecto_final_ppt3.Repository;
 
+import com.proyecto_final_ppt3.Model.Disponibilidad;
 import com.proyecto_final_ppt3.Model.Paciente;
+import com.proyecto_final_ppt3.controller.response.DisponibilidadResponse;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PacienteRepository extends CrudRepository<Paciente,Long> {
+    List<Disponibilidad> findByEspecialidadContainingIgnoreCase(String especialidad);
+
 }

@@ -1,13 +1,26 @@
 package com.proyecto_final_ppt3.controller;
 
+import com.proyecto_final_ppt3.Model.Administrativo;
+import com.proyecto_final_ppt3.controller.request.DisponibilidadRequest;
+import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
+import com.proyecto_final_ppt3.service.AdministrativoService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Map;
+
 public class AdminController {
 
+    private AdministrativoService administrativo;
+
     @PostMapping("/insertarAdmin")
-    public Object insertarAdmin(@RequestBody Object usuario) {
-        return aplicacion.insertarAdmin(usuario);
+    public Administrativo insertarAdmin(@RequestBody Administrativo usuario) {
+        return administrativo.insertarAdmin(usuario);
+    }
+
+    @PostMapping("/guardarDisponibilidad")
+    public Object guardarDisponibilidad(@RequestBody Map<String, DisponibilidadRequest> disponibilidad) {
+        return administrativo.postGuardarDisponibilidad(disponibilidad);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.proyecto_final_ppt3.controller.request;
+package com.proyecto_final_ppt3.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -9,15 +9,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class TurnoRequest {
-    @JsonProperty("id_paciente")
-    private Integer idPaciente;
+public class DisponibilidadResponse {
 
     @JsonProperty("id_medico")
     private Integer idMedico;
 
-    private String especialidad;
-    private String fecha;
-    private String hora;
+    private Integer id;
+    private Integer desde;
+    private Integer hasta;
+    private Integer especialidad;
+    private Integer fecha;
+    private Integer dias;
+
+
 }
