@@ -2,7 +2,6 @@ package com.proyecto_final_ppt3.Repository;
 
 import com.proyecto_final_ppt3.Model.Disponibilidad;
 import com.proyecto_final_ppt3.Model.Paciente;
-import com.proyecto_final_ppt3.controller.response.DisponibilidadResponse;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

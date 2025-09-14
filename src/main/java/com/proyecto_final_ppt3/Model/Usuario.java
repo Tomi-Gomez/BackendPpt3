@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@MappedSuperclass
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
