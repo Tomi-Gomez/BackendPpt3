@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -11,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
@@ -22,8 +23,4 @@ public class Usuario {
     private String tipoUsuario;
     private Integer telefono;
     private String avatar;
-
-    public boolean login(){
-        return false;
-    }
 }

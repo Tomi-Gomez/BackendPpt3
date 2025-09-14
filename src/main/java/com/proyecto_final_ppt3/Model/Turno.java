@@ -1,7 +1,7 @@
 package com.proyecto_final_ppt3.Model;
 
 import com.proyecto_final_ppt3.Enum.Estado;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,9 +14,15 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Data
 public class Turno {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_Turno;
     private LocalDate fecha;
     private LocalTime hora;
     private Estado estado;
     private boolean notificacion;
+
+    @ManyToOne
+    @JoinColumn(name = "agenda_id")  // FK en la tabla turno
+    private Agenda agenda;
 }

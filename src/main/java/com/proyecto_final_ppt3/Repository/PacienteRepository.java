@@ -9,6 +9,4 @@ import java.util.List;
 
 @Repository
 public interface PacienteRepository extends CrudRepository<Paciente,Long> {
-    List<Disponibilidad> findByEspecialidadContainingIgnoreCase(String especialidad);
-
 }
