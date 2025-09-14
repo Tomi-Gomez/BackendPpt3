@@ -17,12 +17,7 @@ public class PacienteController {
         return paciente.registrar(usuarioRequest);
     }
 
-    @GetMapping("/disponibilidadPorEsp/{specialty}")
-    public ResponseEntity<List<DisponibilidadResponse>> disponibilidadPorEspecialidad(@PathVariable("specialty") String specialty) {
-        return ResponseEntity.ok(
-                paciente.DisponibilidadporEspecialidad(specialty)
-        );
-    }
+
 
     @GetMapping("/historialTurnos/{id_paciente}")
     public Object historialTurnos(@PathVariable("id_paciente") String idPaciente,

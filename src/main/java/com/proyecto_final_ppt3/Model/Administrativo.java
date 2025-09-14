@@ -2,15 +2,13 @@ package com.proyecto_final_ppt3.Model;
 
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @SuperBuilder
 public class Administrativo extends Usuario{
 

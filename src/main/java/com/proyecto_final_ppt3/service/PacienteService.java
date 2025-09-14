@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface PacienteService {
     String registrar(UsuarioRequest usuarioRequest);
-    List<DisponibilidadResponse> DisponibilidadporEspecialidad (String specialty);
 
     Object historialTurnos (String idPaciente, String opcion);
 

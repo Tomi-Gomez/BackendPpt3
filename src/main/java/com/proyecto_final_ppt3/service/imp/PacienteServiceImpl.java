@@ -27,21 +27,7 @@ public class PacienteServiceImpl implements PacienteService {
         return "ok";
     }
 
-    @Override
-    public List<DisponibilidadResponse> DisponibilidadporEspecialidad(String specialty) {
-        return repository.findByEspecialidadContainingIgnoreCase(specialty)
-                .stream()
-                .map(d -> new DisponibilidadResponse(
-                        d.getId(),
-                        d.getDesde(),
-                        d.getHasta(),
-                        d.getIdMedico(),
-                        d.getEspecialidad(),
-                        d.getFecha(),
-                        d.getDias()
-                ))
-                .toList();
-    }
+
 
     @Override
     public Object historialTurnos(String idPaciente, String opcion) {
