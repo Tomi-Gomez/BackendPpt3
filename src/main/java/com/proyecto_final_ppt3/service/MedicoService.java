@@ -3,6 +3,7 @@ package com.proyecto_final_ppt3.service;
 import com.proyecto_final_ppt3.Model.Medico;
 import com.proyecto_final_ppt3.controller.request.MedicoRequest;
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
+import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
@@ -11,7 +12,7 @@ import java.util.Optional;
 public interface MedicoService {
     Object getTurnosTomadosCSV(String dniMedico);
 
-    Object medicosById(String med);
+    MedicoResponse medicosById(Integer idMedico);
 
     Object updateMedico(String id, Map<String, Object> medico);
 
@@ -19,7 +20,7 @@ public interface MedicoService {
 
     Object getTurnosMedicos(Object medicoTurnos, String dia);
 
-    Object getMedico();
+    Object getMedicos();
 
     Object updatedMedico(MedicoRequest medicoRequest);
 

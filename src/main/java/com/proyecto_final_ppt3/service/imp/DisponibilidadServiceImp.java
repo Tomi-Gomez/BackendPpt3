@@ -10,17 +10,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DisponibilidadServiceImpl implements DisponibilidadService {
+public class DisponibilidadServiceImp implements DisponibilidadService {
 
     @Autowired
     private DisponibilidadRepository disponibilidadRepository;
 
     @Override
     public List<DisponibilidadResponse> buscarPorEspecialidad(String specialty) {
-        List<Disponibilidad> disponibilidades = disponibilidadRepository.findByEspecialidad(specialty);
+        try{
+            List<Disponibilidad> disponibilidades = disponibilidadRepository.findByEspecialidad(specialty);
+            return disponibilidades.stream()
+                    .map(DisponibilidadResponse::fromDisponibilidad)
+                    .toList();
+        }catch (Exception e){
+            throw new RuntimeException("Error en la busqueda de disponibilidades" + specialty,e);
+        }
 
-        return disponibilidades.stream()
-                .map(DisponibilidadResponse::fromDisponibilidad)
-                .toList();
     }
 }

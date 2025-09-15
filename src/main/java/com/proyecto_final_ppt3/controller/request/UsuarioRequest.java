@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class UsuarioRequest {
-    private Long id;
+    private Integer id;
     private String tipoUsuario;
     private String email;
     private Integer dni;

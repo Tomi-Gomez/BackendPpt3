@@ -17,9 +17,6 @@ public class Agenda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDate fecha;
 
-    @OneToMany(mappedBy = "agenda", cascade = CascadeType.ALL)
-    private List<Turno> listaTurnos = new ArrayList<>();
 }

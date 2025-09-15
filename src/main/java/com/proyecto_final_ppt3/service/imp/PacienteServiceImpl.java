@@ -27,8 +27,6 @@ public class PacienteServiceImpl implements PacienteService {
         return "ok";
     }
 
-
-
     @Override
     public Object historialTurnos(String idPaciente, String opcion) {
         return null;

@@ -11,7 +11,7 @@ public class MedicoRequest {
     private Integer dni;
     private String nombre;
     private String apellido;
-    private String telefono;
+    private Integer telefono;
     private String contra;
     private String especialidad;
     private String matricula;

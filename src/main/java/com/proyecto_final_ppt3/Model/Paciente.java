@@ -16,6 +16,7 @@ public class Paciente extends Usuario{
 
     public static Paciente fromUsuarioRequest(UsuarioRequest usuarioRequest) {
         return Paciente.builder()
+                .id(usuarioRequest.getId())
                 .dni(usuarioRequest.getDni())
                 .tipoUsuario(usuarioRequest.getTipoUsuario())
                 .email(usuarioRequest.getEmail())

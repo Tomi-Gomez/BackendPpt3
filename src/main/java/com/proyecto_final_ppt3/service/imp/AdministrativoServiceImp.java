@@ -14,7 +14,6 @@ public class AdministrativoServiceImp implements AdministrativoService {
 
     private AdministrativoRepository repository;
 
-
     @Override
     public Administrativo insertarAdmin(Administrativo usuario) {
 
