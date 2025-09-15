@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class MedicoResponse extends Usuario {
     private String matricula;
-    private EspecialidadMedica especialidadMedica;
+    private String especialidadMedica;
 
     public static MedicoResponse fromMedico(Medico medico){
         return MedicoResponse.builder()

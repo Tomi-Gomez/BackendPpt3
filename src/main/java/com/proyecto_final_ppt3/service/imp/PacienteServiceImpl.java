@@ -2,13 +2,10 @@ package com.proyecto_final_ppt3.service.imp;
 
 import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
-import com.proyecto_final_ppt3.controller.request.DisponibilidadRequest;
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
-import com.proyecto_final_ppt3.controller.response.DisponibilidadResponse;
 import com.proyecto_final_ppt3.service.PacienteService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class PacienteServiceImpl implements PacienteService {
@@ -24,6 +21,7 @@ public class PacienteServiceImpl implements PacienteService {
         } catch (Exception e) {
             return "Error en registro";
         }
+
         return "ok";
     }
 

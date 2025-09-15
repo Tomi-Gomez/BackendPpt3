@@ -16,8 +16,11 @@ public class AdministrativoServiceImp implements AdministrativoService {
 
     @Override
     public Administrativo insertarAdmin(Administrativo usuario) {
-
-        return repository.save(usuario);
+        try {
+            return repository.save(usuario);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
