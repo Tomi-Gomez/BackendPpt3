@@ -26,11 +26,6 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public Object historialTurnos(String idPaciente, String opcion) {
-        return null;
-    }
-
-    @Override
     public Object pacienteById(Object idPaciente) {
         return null;
     }

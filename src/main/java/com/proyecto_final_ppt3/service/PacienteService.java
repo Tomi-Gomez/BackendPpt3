@@ -9,7 +9,5 @@ import java.util.List;
 public interface PacienteService {
     String registrar(UsuarioRequest usuarioRequest);
 
-    Object historialTurnos (String idPaciente, String opcion);
-
     Object pacienteById (Object idPaciente);
 }

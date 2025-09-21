@@ -17,14 +17,6 @@ public class PacienteController {
         return paciente.registrar(usuarioRequest);
     }
 
-
-
-    @GetMapping("/historialTurnos/{id_paciente}")
-    public Object historialTurnos(@PathVariable("id_paciente") String idPaciente,
-                                  @RequestParam(name = "opcion", required = false) String opcion) {
-        return paciente.historialTurnos(idPaciente, opcion);
-    }
-
     @GetMapping("/pacienteId/{id}")
     public Object pacienteById(@PathVariable("id") String id) {
         return paciente.pacienteById(id);
