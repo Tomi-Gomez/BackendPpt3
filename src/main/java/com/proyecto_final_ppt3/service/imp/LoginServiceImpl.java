@@ -9,12 +9,13 @@ import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.controller.request.LoginRequest;
 import com.proyecto_final_ppt3.controller.response.LoginResponse;
 import com.proyecto_final_ppt3.service.LoginService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class LoginServiceImpl implements LoginService {
 

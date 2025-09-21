@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity
+@Entity(name = "Turno")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -22,7 +22,7 @@ public class Turno {
     private Integer id;
     private Integer idPaciente;
     private Integer idMedico;
-    private String fecha;
+    private String dia;
     private String hora;
     private String observaciones;
     private String estado;

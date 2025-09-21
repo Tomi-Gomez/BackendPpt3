@@ -19,7 +19,7 @@ public class TurnoResponse  {
 
     public static TurnoResponse fromTurno(Turno turno){
         return TurnoResponse.builder()
-                .idTurno(turno.getIdTurno())
+                .idTurno(turno.getId())
                 .idPaciente(turno.getIdPaciente())
                 .idMedico(turno.getIdMedico())
                 .dia(turno.getDia())

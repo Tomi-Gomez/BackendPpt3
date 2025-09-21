@@ -25,7 +25,7 @@ public class TurnoRequest {
                 .idPaciente(turnoRequest.getIdPaciente())
                 .idMedico(turnoRequest.getIdMedico())
                 .especialidad(turnoRequest.getEspecialidad())
-                .fecha(turnoRequest.getDia())
+                .dia(turnoRequest.getDia())
                 .hora(turnoRequest.getHora())
                 .observaciones("no aplica")
                 .estado("a confirmar")
