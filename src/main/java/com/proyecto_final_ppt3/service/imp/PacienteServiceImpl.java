@@ -3,8 +3,11 @@ package com.proyecto_final_ppt3.service.imp;
 import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
+import com.proyecto_final_ppt3.controller.response.PacienteResponse;
 import com.proyecto_final_ppt3.service.PacienteService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -26,7 +29,8 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public Object pacienteById(Object idPaciente) {
-        return null;
+    public List<PacienteResponse> pacienteById(Integer idPaciente) {
+        List<Paciente> pacientes = repository.findByDni(idPaciente);
+        return pacientes.stream().map(PacienteResponse::fromPaciente).toList();
     }
 }

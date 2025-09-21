@@ -22,9 +22,5 @@ public class AdminController {
         return administrativo.insertarAdmin(usuario);
     }
 
-    @PostMapping("/guardarDisponibilidad")
-    public Object guardarDisponibilidad(@RequestBody Map<String, DisponibilidadRequest> disponibilidad) {
-        return administrativo.postGuardarDisponibilidad(disponibilidad);
-    }
 
 }

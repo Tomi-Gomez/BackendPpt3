@@ -6,28 +6,12 @@ import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
 import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public interface MedicoService {
-    Object getTurnosTomadosCSV(String dniMedico);
-
     MedicoResponse medicosById(Integer idMedico);
-
-    Object updateMedico(String id, Map<String, Object> medico);
-
-    Object historialTurnosMed(Integer idMedico);
-
-    Object getTurnosMedicos(Object medicoTurnos, String dia);
-
-    Object getMedicos();
-
-    Object updatedMedico(MedicoRequest medicoRequest);
-
-
-    ResponseEntity<Medico> insertarMed(UsuarioRequest usuario);
-
-    Optional<Medico> getMedicoEspecialidad(Object medico);
-
-    Object updateMedico(Integer id);
+    List<MedicoResponse> getMedicos();
+    MedicoResponse updatedMedico(MedicoRequest medicoRequest);
 }

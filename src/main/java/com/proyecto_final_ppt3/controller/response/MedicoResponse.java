@@ -12,9 +12,10 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @AllArgsConstructor
 @SuperBuilder
-public class MedicoResponse extends Usuario {
+public class MedicoResponse extends UsuarioResponse {
     private String matricula;
     private String especialidadMedica;
+    private String habilitacion;
 
     public static MedicoResponse fromMedico(Medico medico){
         return MedicoResponse.builder()
@@ -29,6 +30,7 @@ public class MedicoResponse extends Usuario {
                 .avatar(medico.getAvatar())
                 .matricula(medico.getMatricula())
                 .especialidadMedica(medico.getEspecialidadMedica())
+                .habilitacion(medico.getHabilitacion())
                 .build();
 
     }

@@ -1,13 +1,11 @@
 package com.proyecto_final_ppt3.controller;
 
+import com.proyecto_final_ppt3.controller.request.DisponibilidadRequest;
 import com.proyecto_final_ppt3.controller.response.DisponibilidadResponse;
 import com.proyecto_final_ppt3.service.DisponibilidadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +21,10 @@ public class DisponibilidadController {
         return ResponseEntity.ok(
                 disponibilidadService.buscarPorEspecialidad(specialty)
         );
+    }
+
+    @PostMapping("/guardarDisponibilidad")
+    public DisponibilidadResponse guardarDisponibilidad(@RequestBody DisponibilidadRequest disponibilidad) {
+        return disponibilidadService.postGuardarDisponibilidad(disponibilidad);
     }
 }

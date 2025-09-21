@@ -1,10 +1,8 @@
 package com.proyecto_final_ppt3.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.proyecto_final_ppt3.Model.Turno;
+import lombok.*;
 
 @Getter
 @Setter
@@ -18,6 +16,20 @@ public class TurnoRequest {
     private Integer idMedico;
 
     private String especialidad;
-    private String fecha;
+    private String dia;
     private String hora;
+    private String observaciones;
+
+    public static Turno toTurno(TurnoRequest turnoRequest){
+        return Turno.builder()
+                .idPaciente(turnoRequest.getIdPaciente())
+                .idMedico(turnoRequest.getIdMedico())
+                .especialidad(turnoRequest.getEspecialidad())
+                .fecha(turnoRequest.getDia())
+                .hora(turnoRequest.getHora())
+                .observaciones("no aplica")
+                .estado("a confirmar")
+                .calificacion("a confirmar")
+                .build();
+    }
 }

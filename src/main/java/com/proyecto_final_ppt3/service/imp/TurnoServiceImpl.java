@@ -3,7 +3,10 @@ package com.proyecto_final_ppt3.service.imp;
 import com.proyecto_final_ppt3.Model.Turno;
 import com.proyecto_final_ppt3.Repository.TurnoRepository;
 import com.proyecto_final_ppt3.controller.request.TurnoRequest;
+import com.proyecto_final_ppt3.controller.response.TurnoDetalleResponse;
 import com.proyecto_final_ppt3.controller.response.TurnoResponse;
+import com.proyecto_final_ppt3.dto.TurnoDetalleDTO;
+import com.proyecto_final_ppt3.dto.TurnoDetalleProjection;
 import com.proyecto_final_ppt3.service.PacienteService;
 import com.proyecto_final_ppt3.service.TurnoService;
 import jakarta.websocket.server.ServerEndpoint;
@@ -20,18 +23,33 @@ public class TurnoServiceImpl implements TurnoService {
     private TurnoRepository turnoRepository;
 
     @Override
-    public Object guardarTurno(TurnoRequest turno) {
-        return null;
+    public TurnoResponse guardarTurno(TurnoRequest turnoRequest) {
+        Turno turno = TurnoRequest.toTurno(turnoRequest);
+
+        turnoRepository.save(turno);
+        return TurnoResponse.fromTurno(turno);
     }
 
     @Override
-    public Object updateTurno(Integer id, String option) {
-        return null;
+    public TurnoResponse updateTurno(Integer idTurno, String option) {
+        Turno turno = turnoRepository.findById(idTurno).get();
+
+        //aca se hace con el dto pero como no hay tiempo hay que hacer la vista gorda
+        turno.setEstado(option);
+        turnoRepository.save(turno);
+
+        return TurnoResponse.fromTurno(turno);
     }
 
     @Override
-    public Object updateObservaciones(Integer id, TurnoRequest turno) {
-        return null;
+    public TurnoResponse updateObservaciones(Integer idTurno, TurnoRequest turnoRequest) {
+        Turno turno = turnoRepository.findById(idTurno).get();
+
+        //aca se hace con el dto pero como no hay tiempo hay que hacer la vista gorda
+        turno.setObservaciones(turnoRequest.getObservaciones());
+        turnoRepository.save(turno);
+
+        return TurnoResponse.fromTurno(turno);
     }
 
     @Override
@@ -44,6 +62,25 @@ public class TurnoServiceImpl implements TurnoService {
             turnos = turnoRepository.findByIdPacienteAndEstado(idPaciente, "confirmado");
         }
 
+        return turnos.stream().map(TurnoResponse::fromTurno).toList();
+    }
+
+    @Override
+    public List<TurnoResponse> getTurnosMedicos(Integer idMedico, String dia) {
+        List<Turno> turnos =  turnoRepository.findByIdMedicoAndDia(idMedico, dia);
+        return turnos.stream().map(TurnoResponse::fromTurno).toList();
+    }
+
+    @Override
+    public List<TurnoDetalleResponse> getTurnosTomadosCSV(Integer dniMedico) {
+        List<TurnoDetalleProjection> turnoDetalleDTO  = turnoRepository.findTurnosDetalleByMedicoId(dniMedico);
+
+        return turnoDetalleDTO.stream().map(TurnoDetalleResponse::fromTurnoDetalleProjection).toList();
+    }
+
+    @Override
+    public List<TurnoResponse> historialTurnosMed(Integer idMedico) {
+        List<Turno> turnos = turnoRepository.findByIdMedico(idMedico);
         return turnos.stream().map(TurnoResponse::fromTurno).toList();
     }
 

@@ -20,31 +20,13 @@ public class MedicoServiceImp implements MedicoService {
     @Autowired
     private MedicoRespository medicoRespository;
 
-    @Override
-    public Object getTurnosTomadosCSV(String dniMedico) {
-        return null;
-    }
+
 
     @Override
     public MedicoResponse medicosById(Integer idMedico) {
         return medicoRespository.findById(idMedico)
                 .map(MedicoResponse::fromMedico)
                 .orElse(null); //Armar el handler
-    }
-
-    @Override
-    public Object updateMedico(String id, Map<String, Object> medico) {
-        return null;
-    }
-
-    @Override
-    public Object historialTurnosMed(Integer idMedico) {
-        return null;
-    }
-
-    @Override
-    public Object getTurnosMedicos(Object medicoTurnos, String dia) {
-        return null;
     }
 
     @Override
@@ -78,20 +60,5 @@ public class MedicoServiceImp implements MedicoService {
         medicoRespository.save(medico);
 
         return MedicoResponse.fromMedico(medico);
-    }
-
-    @Override
-    public ResponseEntity<Medico> insertarMed(UsuarioRequest usuario) {
-        return null;
-    }
-
-    @Override
-    public Optional<Medico> getMedicoEspecialidad(Object medico) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Object updateMedico(Integer id) {
-        return null;
     }
 }
