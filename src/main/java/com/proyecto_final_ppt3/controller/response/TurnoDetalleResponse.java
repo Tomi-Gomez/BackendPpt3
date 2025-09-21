@@ -1,7 +1,6 @@
 package com.proyecto_final_ppt3.controller.response;
 
-import com.proyecto_final_ppt3.Model.Turno;
-import com.proyecto_final_ppt3.dto.TurnoDetalleDTO;
+
 import com.proyecto_final_ppt3.dto.TurnoDetalleProjection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

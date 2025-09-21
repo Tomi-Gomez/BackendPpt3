@@ -12,4 +12,6 @@ import java.util.List;
 public interface AdministrativoRepository extends JpaRepository<Administrativo, Integer> {
 
     List<Administrativo> findByDniAndContrasenia(Integer dni, String contra);
+
+
 }

@@ -1,14 +1,13 @@
-package com.proyecto_final_ppt3.controller.response;
+package com.proyecto_final_ppt3.Model.DTO;
 
-import com.proyecto_final_ppt3.Model.DTO.TurnoDTO;
 import com.proyecto_final_ppt3.Model.Turno;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class TurnoResponse  {
-    private Integer idTurno;
+public class TurnoDTO {
+    private Integer id;
     private Integer idPaciente;
     private Integer idMedico;
     private String dia;
@@ -16,11 +15,11 @@ public class TurnoResponse  {
     private String observaciones;
     private String estado;
     private String calificacion;
+    private String especialidad;
 
-
-    public static TurnoResponse fromTurno(Turno turno){
-        return TurnoResponse.builder()
-                .idTurno(turno.getId())
+    public TurnoDTO turnoDTO(Turno turno){
+        return TurnoDTO.builder()
+                .id(turno.getId())
                 .idPaciente(turno.getIdPaciente())
                 .idMedico(turno.getIdMedico())
                 .dia(turno.getDia())
@@ -28,6 +27,9 @@ public class TurnoResponse  {
                 .observaciones(turno.getObservaciones())
                 .estado(turno.getEstado())
                 .calificacion(turno.getCalificacion())
+                .especialidad(turno.getEspecialidad())
                 .build();
     }
+
+    
 }

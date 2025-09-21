@@ -1,5 +1,6 @@
 package com.proyecto_final_ppt3.Repository;
 
+import com.proyecto_final_ppt3.Model.DTO.TurnoDTO;
 import com.proyecto_final_ppt3.Model.Turno;
 import com.proyecto_final_ppt3.dto.TurnoDetalleProjection;
 import org.springframework.data.jpa.repository.JpaRepository;

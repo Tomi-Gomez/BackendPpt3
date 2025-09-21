@@ -1,15 +1,10 @@
 package com.proyecto_final_ppt3.Model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.proyecto_final_ppt3.Enum.Estado;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity(name = "Turno")
 @AllArgsConstructor

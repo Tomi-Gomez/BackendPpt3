@@ -1,9 +1,6 @@
 package com.proyecto_final_ppt3.controller.response;
-import com.proyecto_final_ppt3.Enum.EspecialidadMedica;
 import com.proyecto_final_ppt3.Model.Medico;
-import com.proyecto_final_ppt3.Model.Usuario;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;

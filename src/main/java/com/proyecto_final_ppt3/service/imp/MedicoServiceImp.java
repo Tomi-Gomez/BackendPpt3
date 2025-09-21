@@ -5,6 +5,8 @@ import com.proyecto_final_ppt3.Repository.MedicoRespository;
 import com.proyecto_final_ppt3.controller.request.MedicoRequest;
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
 import com.proyecto_final_ppt3.controller.response.MedicoResponse;
+import com.proyecto_final_ppt3.handler.MedicoNotFoundException;
+import com.proyecto_final_ppt3.handler.MedicosNotFoundException;
 import com.proyecto_final_ppt3.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,8 @@ public class MedicoServiceImp implements MedicoService {
     public MedicoResponse medicosById(Integer idMedico) {
         return medicoRespository.findById(idMedico)
                 .map(MedicoResponse::fromMedico)
-                .orElse(null); //Armar el handler
+                .orElseThrow(() ->
+                        new MedicoNotFoundException(idMedico)); //Armar el handler (Chequear que este bien Tomi2)
     }
 
     @Override
@@ -37,15 +40,15 @@ public class MedicoServiceImp implements MedicoService {
                     .map(MedicoResponse::fromMedico)
                     .toList();
         } catch (Exception e) {
-            throw new RuntimeException("Error en la busqueda de disponibilidades " + e);
+            throw new MedicosNotFoundException("Error en la busqueda de disponibilidades " + e); // (Chequear que este bien)
         }
     }
 
     @Override
     public MedicoResponse updatedMedico(MedicoRequest medicoRequest) {
         Medico medico = medicoRespository.findById(medicoRequest.getId())
-                .orElseThrow(() -> new RuntimeException(
-                        "Médico no encontrado con id " + medicoRequest.getId()));
+                .orElseThrow(() ->
+                        new MedicoNotFoundException(medicoRequest.getId()));
 
         medico.setNombre(medicoRequest.getNombre());
         medico.setApellido(medicoRequest.getApellido());

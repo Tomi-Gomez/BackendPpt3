@@ -1,10 +1,9 @@
 package com.proyecto_final_ppt3.controller;
 
-import com.proyecto_final_ppt3.Model.Turno;
+
 import com.proyecto_final_ppt3.controller.request.TurnoRequest;
 import com.proyecto_final_ppt3.controller.response.TurnoDetalleResponse;
 import com.proyecto_final_ppt3.controller.response.TurnoResponse;
-import com.proyecto_final_ppt3.dto.TurnoDetalleDTO;
 import com.proyecto_final_ppt3.service.TurnoService;
 import org.springframework.web.bind.annotation.*;
 

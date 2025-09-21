@@ -1,6 +1,7 @@
 package com.proyecto_final_ppt3.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.proyecto_final_ppt3.Model.DTO.TurnoDTO;
 import com.proyecto_final_ppt3.Model.Turno;
 import lombok.*;
 
