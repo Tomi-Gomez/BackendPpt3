@@ -17,7 +17,7 @@ public class TurnoResponse  {
     private String calificacion;
 
 
-    public TurnoResponse fromTurno(Turno turno){
+    public static TurnoResponse fromTurno(Turno turno){
         return TurnoResponse.builder()
                 .idTurno(turno.getIdTurno())
                 .idPaciente(turno.getIdPaciente())

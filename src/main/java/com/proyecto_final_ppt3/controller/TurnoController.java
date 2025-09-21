@@ -2,11 +2,14 @@ package com.proyecto_final_ppt3.controller;
 
 import com.proyecto_final_ppt3.Model.Turno;
 import com.proyecto_final_ppt3.controller.request.TurnoRequest;
+import com.proyecto_final_ppt3.controller.response.TurnoResponse;
 import com.proyecto_final_ppt3.service.TurnoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/")
 public class TurnoController {
 
     private TurnoService turnoService;
@@ -29,8 +32,8 @@ public class TurnoController {
     }
 
     @GetMapping("/historialTurnos/{id_paciente}")
-    public List<Turno> historialTurnos(@PathVariable("id_paciente") Integer idPaciente,
-                                       @RequestParam(name = "opcion", required = false) Integer opcion) {
+    public List<TurnoResponse> historialTurnos(@PathVariable("id_paciente") Integer idPaciente,
+                                               @RequestParam(name = "opcion", required = false) Integer opcion) {
         return turnoService.historialTurnos(idPaciente, opcion);
     }
 }

@@ -36,11 +36,15 @@ public class TurnoServiceImpl implements TurnoService {
 
     @Override
     public List<TurnoResponse> historialTurnos(Integer idPaciente, Integer opcion) {
+        List<Turno> turnos;
+
         if (opcion == 1) {
-            return turnoRepository.findByIdPaciente(idPaciente);
+            turnos = turnoRepository.findByIdPaciente(idPaciente);
         } else {
-            return turnoRepository.findByIdPacienteAndEstado(idPaciente, "confirmado");
+            turnos = turnoRepository.findByIdPacienteAndEstado(idPaciente, "confirmado");
         }
+
+        return turnos.stream().map(TurnoResponse::fromTurno).toList();
     }
 
 }

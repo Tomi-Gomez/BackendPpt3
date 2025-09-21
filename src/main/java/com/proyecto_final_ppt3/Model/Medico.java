@@ -17,4 +17,5 @@ import lombok.NoArgsConstructor;
 public class Medico extends Usuario{
     private String matricula;
     private String especialidadMedica;
+    private String habilitacion;
 }
