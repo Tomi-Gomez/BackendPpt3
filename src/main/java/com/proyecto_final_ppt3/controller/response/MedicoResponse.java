@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class MedicoResponse extends UsuarioResponse {
     private String matricula;
-    private String especialidadMedica;
+    private String especialidad;
     private String habilitacion;
 
     public static MedicoResponse fromMedico(Medico medico){
@@ -24,9 +24,8 @@ public class MedicoResponse extends UsuarioResponse {
                 .contrasenia(medico.getContrasenia())
                 .tipoUsuario(medico.getTipoUsuario())
                 .telefono(medico.getTelefono())
-                .avatar(medico.getAvatar())
                 .matricula(medico.getMatricula())
-                .especialidadMedica(medico.getEspecialidadMedica())
+                .especialidad(medico.getEspecialidad())
                 .habilitacion(medico.getHabilitacion())
                 .build();
 

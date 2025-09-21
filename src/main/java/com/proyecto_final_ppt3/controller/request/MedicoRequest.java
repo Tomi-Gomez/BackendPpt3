@@ -1,5 +1,6 @@
 package com.proyecto_final_ppt3.controller.request;
 
+import com.proyecto_final_ppt3.Model.Medico;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,4 +18,19 @@ public class MedicoRequest {
     private String matricula;
     private String habilitacion;
     private String avatar;
+
+    public static Medico toMedico(MedicoRequest medicoRequest){
+        return Medico.builder()
+                .id(medicoRequest.getId())
+                .email(medicoRequest.getEmail())
+                .dni(medicoRequest.getDni())
+                .nombre(medicoRequest.getNombre())
+                .apellido(medicoRequest.getApellido())
+                .telefono(medicoRequest.getTelefono())
+                .contrasenia(medicoRequest.getContra())
+                .especialidad(medicoRequest.getEspecialidad())
+                .matricula(medicoRequest.getMatricula())
+                .habilitacion(medicoRequest.getHabilitacion())
+                .build();
+    }
 }
