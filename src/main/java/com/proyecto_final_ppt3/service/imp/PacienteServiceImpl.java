@@ -4,6 +4,7 @@ import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
 import com.proyecto_final_ppt3.controller.response.PacienteResponse;
+import com.proyecto_final_ppt3.controller.response.RegistroResponse;
 import com.proyecto_final_ppt3.handler.PacienteExistenteException;
 import com.proyecto_final_ppt3.service.PacienteService;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class PacienteServiceImpl implements PacienteService {
     private PacienteRepository repository;
 
     @Override
-    public String registrar(UsuarioRequest usuarioRequest) {
+    public RegistroResponse registrar(UsuarioRequest usuarioRequest) {
         List<Paciente> paciente1 = repository.findByDni(usuarioRequest.getDni());
 
         if (!paciente1.isEmpty()) {
@@ -52,10 +53,10 @@ public class PacienteServiceImpl implements PacienteService {
         try {
             repository.save(paciente);
         } catch (Exception e) {
-            return "Error en registro";
+            return new RegistroResponse("Error en registro");
         }
 
-        return "ok";
+        return new RegistroResponse("ok");
     }
 
     @Override

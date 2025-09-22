@@ -4,11 +4,12 @@ import com.proyecto_final_ppt3.controller.request.DisponibilidadRequest;
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
 import com.proyecto_final_ppt3.controller.response.DisponibilidadResponse;
 import com.proyecto_final_ppt3.controller.response.PacienteResponse;
+import com.proyecto_final_ppt3.controller.response.RegistroResponse;
 
 import java.util.List;
 
 public interface PacienteService {
-    String registrar(UsuarioRequest usuarioRequest);
+    RegistroResponse registrar(UsuarioRequest usuarioRequest);
 
     List<PacienteResponse> pacienteById (Integer idPaciente);
 }
