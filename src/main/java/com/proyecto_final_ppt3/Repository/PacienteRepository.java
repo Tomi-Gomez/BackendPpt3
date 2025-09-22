@@ -16,4 +16,7 @@ public interface PacienteRepository extends JpaRepository<Paciente,Integer> {
 
     List<Paciente> findByDni(Integer dni);
 
+    @Query("SELECT MAX(p.credencial) FROM Paciente p")
+    String findUltimaCredencial();
+
 }

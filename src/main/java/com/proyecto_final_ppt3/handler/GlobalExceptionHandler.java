@@ -60,4 +60,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @ExceptionHandler(PacienteExistenteException.class)
+    public ResponseEntity<ErrorResponse> handlerPacienteExistente
+            (PacienteExistenteException ex, WebRequest webRequest){
+        ErrorResponse error = ErrorResponse.builder()
+                .mensaje(ex.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(LocalDateTime.now())
+                .path(webRequest.getDescription(false))
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
 }

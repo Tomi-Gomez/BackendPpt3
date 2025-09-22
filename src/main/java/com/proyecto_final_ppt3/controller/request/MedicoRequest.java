@@ -21,7 +21,6 @@ public class MedicoRequest {
 
     public static Medico toMedico(MedicoRequest medicoRequest){
         return Medico.builder()
-                .id(medicoRequest.getId())
                 .email(medicoRequest.getEmail())
                 .dni(medicoRequest.getDni())
                 .nombre(medicoRequest.getNombre())

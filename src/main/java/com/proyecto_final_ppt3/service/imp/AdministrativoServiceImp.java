@@ -27,7 +27,7 @@ public class AdministrativoServiceImp implements AdministrativoService {
         try {
             return repository.save(administrativo);
         }catch (Exception e){
-            throw new AdministrativoInsertException("Error al insertar un administrativo" + e);
+            throw new AdministrativoInsertException("Error al insertar un administrativo" + e.getMessage());
         }
     }
 

@@ -2,6 +2,9 @@ package com.proyecto_final_ppt3.Model;
 
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -11,12 +14,23 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class Paciente extends Usuario{
+public class Paciente {
     private String credencial;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    public static Paciente fromUsuarioRequest(UsuarioRequest usuarioRequest) {
+    private String nombre;
+    private String apellido;
+    private Integer dni;
+    private String email;
+    private String contrasenia;
+    private String tipoUsuario;
+    private Integer telefono;
+    private String avatar;
+
+    public static Paciente fromUsuarioRequest(UsuarioRequest usuarioRequest, String credencial) {
         return Paciente.builder()
-                .id(usuarioRequest.getId())
                 .dni(usuarioRequest.getDni())
                 .tipoUsuario(usuarioRequest.getTipoUsuario())
                 .email(usuarioRequest.getEmail())
@@ -24,7 +38,7 @@ public class Paciente extends Usuario{
                 .apellido(usuarioRequest.getApellido())
                 .telefono(usuarioRequest.getTelefono())
                 .contrasenia(usuarioRequest.getContra())
-                .credencial(usuarioRequest.getCredencial())
+                .credencial(credencial)
                 .avatar(usuarioRequest.getAvatar())
                 .build();
 
