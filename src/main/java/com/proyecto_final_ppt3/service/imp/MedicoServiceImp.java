@@ -21,13 +21,15 @@ public class MedicoServiceImp implements MedicoService {
     private MedicoRespository medicoRespository;
 
 
-
+    //lo cambie porque buscaba el dni
     @Override
-    public MedicoResponse medicosById(Integer idMedico) {
-        return medicoRespository.findById(idMedico)
-                .map(MedicoResponse::fromMedico)
-                .orElseThrow(() ->
-                        new MedicoNotFoundException(idMedico)); //Armar el handler (Chequear que este bien Tomi2)
+    public List<MedicoResponse> medicosById(Integer idMedico) {
+        List<Medico> medicos = medicoRespository.findByDni(idMedico);
+
+        if (medicos.isEmpty()) {
+            throw new MedicoNotFoundException(idMedico);
+        }
+        return medicos.stream().map(MedicoResponse::fromMedico).toList();
     }
 
     @Override

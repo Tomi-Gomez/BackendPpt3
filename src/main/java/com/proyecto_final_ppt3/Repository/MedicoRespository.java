@@ -13,4 +13,7 @@ import java.util.List;
 public interface MedicoRespository extends JpaRepository<Medico, Integer> {
 
     List<Medico> findByDniAndContrasenia(Integer dni, String contra);
+
+    List<Medico> findByDni(Integer dni);
+
 }

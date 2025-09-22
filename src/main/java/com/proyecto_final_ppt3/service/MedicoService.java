@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface MedicoService {
-    MedicoResponse medicosById(Integer idMedico);
+    List<MedicoResponse> medicosById(Integer idMedico);
     List<MedicoResponse> getMedicos();
     MedicoResponse updatedMedico(MedicoRequest medicoRequest);
 }

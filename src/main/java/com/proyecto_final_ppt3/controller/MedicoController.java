@@ -26,7 +26,7 @@ public class MedicoController {
     }
 
     @GetMapping("/medicosById")
-    public ResponseEntity<MedicoResponse> medicosById(@RequestParam("id_medico") Integer idMedico) {
+    public ResponseEntity<List<MedicoResponse>> medicosById(@RequestParam("id_medico") Integer idMedico) {
         return ResponseEntity.ok(aplicacion.medicosById(idMedico));
     }
 
