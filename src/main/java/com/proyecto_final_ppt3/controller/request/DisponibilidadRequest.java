@@ -4,6 +4,8 @@ import com.proyecto_final_ppt3.Model.Disponibilidad;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class DisponibilidadRequest {
@@ -13,7 +15,7 @@ public class DisponibilidadRequest {
     private int idMedico;
     private String especialidad;
     private String fecha;
-    private String dias;
+    private List<String> dias;
 
     public static Disponibilidad toDisponibilidad(DisponibilidadRequest disponibilidadRequest) {
         return Disponibilidad.builder()
@@ -21,7 +23,7 @@ public class DisponibilidadRequest {
                 .especialidad(disponibilidadRequest.getEspecialidad())
                 .desde(disponibilidadRequest.getDesde())
                 .hasta(disponibilidadRequest.getHasta())
-                .dias(disponibilidadRequest.getDias())
+                .dias(String.join(",", disponibilidadRequest.getDias()))
                 .build();
     }
 }
