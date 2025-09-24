@@ -25,7 +25,7 @@ public interface TurnoRepository extends JpaRepository<Turno, Integer> {
                CONCAT(A.nombre, ' ', A.apellido) AS paciente,
                A.dni AS dniPaciente,
                CONCAT(M.nombre, ' ', M.apellido) AS medico
-        FROM Turno T
+        FROM turno T
         INNER JOIN Paciente A ON A.id = T.id_paciente
         INNER JOIN Medico M ON M.id = T.id_medico
         WHERE M.id = :medicoId

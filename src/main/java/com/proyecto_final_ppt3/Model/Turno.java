@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "Turno")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
