@@ -17,7 +17,7 @@ public class Turno {
     private Integer id;
     private Integer idPaciente;
     private Integer idMedico;
-    private String dia;
+    private String fecha;
     private String hora;
     private String observaciones;
     private String estado;

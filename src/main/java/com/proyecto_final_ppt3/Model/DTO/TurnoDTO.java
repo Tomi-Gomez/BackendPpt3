@@ -22,7 +22,7 @@ public class TurnoDTO {
                 .id(turno.getId())
                 .idPaciente(turno.getIdPaciente())
                 .idMedico(turno.getIdMedico())
-                .dia(turno.getDia())
+                .dia(turno.getFecha())
                 .hora(turno.getHora())
                 .observaciones(turno.getObservaciones())
                 .estado(turno.getEstado())
