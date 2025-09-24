@@ -8,12 +8,14 @@ import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import com.proyecto_final_ppt3.handler.MedicoNotFoundException;
 import com.proyecto_final_ppt3.handler.MedicosNotFoundException;
 import com.proyecto_final_ppt3.service.MedicoService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class MedicoServiceImp implements MedicoService {
 

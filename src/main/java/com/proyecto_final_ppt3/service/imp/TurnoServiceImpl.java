@@ -8,12 +8,13 @@ import com.proyecto_final_ppt3.controller.response.TurnoDetalleResponse;
 import com.proyecto_final_ppt3.controller.response.TurnoResponse;
 import com.proyecto_final_ppt3.dto.TurnoDetalleProjection;
 import com.proyecto_final_ppt3.service.TurnoService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class TurnoServiceImpl implements TurnoService {
 

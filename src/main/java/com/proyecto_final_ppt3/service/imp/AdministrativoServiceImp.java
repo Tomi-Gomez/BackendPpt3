@@ -9,11 +9,12 @@ import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import com.proyecto_final_ppt3.handler.AdministrativoInsertException;
 import com.proyecto_final_ppt3.handler.MedicosNotFoundException;
 import com.proyecto_final_ppt3.service.AdministrativoService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class AdministrativoServiceImp implements AdministrativoService {
 
