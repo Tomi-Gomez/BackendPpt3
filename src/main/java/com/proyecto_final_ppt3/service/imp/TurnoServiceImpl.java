@@ -64,8 +64,8 @@ public class TurnoServiceImpl implements TurnoService {
     }
 
     @Override
-    public List<TurnoResponse> getTurnosMedicos(Integer idMedico, String dia) {
-        List<Turno> turnos =  turnoRepository.findByIdMedicoAndDia(idMedico, dia);
+    public List<TurnoResponse> getTurnosMedicos(Integer idMedico, String fecha) {
+        List<Turno> turnos =  turnoRepository.findByIdMedicoAndFecha(idMedico, fecha);
         return turnos.stream().map(TurnoResponse::fromTurno).toList();
     }
 

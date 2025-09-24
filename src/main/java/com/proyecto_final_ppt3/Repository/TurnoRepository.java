@@ -33,7 +33,7 @@ public interface TurnoRepository extends JpaRepository<Turno, Integer> {
     )
     List<TurnoDetalleProjection> findTurnosDetalleByMedicoId(@Param("medicoId") Integer medicoId);
 
-    List<Turno> findByIdMedicoAndDia(Integer idMedico, String dia);
+    List<Turno> findByIdMedicoAndFecha(Integer idMedico, String fecha);
 
     List<Turno> findByIdMedico(Integer idMedico);
 }
