@@ -8,4 +8,6 @@ public interface TurnoDetalleProjection {
     String getPaciente();
     String getDniPaciente();
     String getMedico();
+    String getHora();
+    String getEstado();
 }

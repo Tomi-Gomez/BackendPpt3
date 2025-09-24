@@ -21,10 +21,12 @@ public interface TurnoRepository extends JpaRepository<Turno, Integer> {
 
     @Query(value = """
         SELECT T.id AS id,
-               T.dia AS fecha,
+               T.fecha AS fecha,
                CONCAT(A.nombre, ' ', A.apellido) AS paciente,
                A.dni AS dniPaciente,
-               CONCAT(M.nombre, ' ', M.apellido) AS medico
+               CONCAT(M.nombre, ' ', M.apellido) AS medico,
+               T.hora AS hora,
+               T.estado AS estado
         FROM turno T
         INNER JOIN paciente A ON A.id = T.id_paciente
         INNER JOIN medico M ON M.id = T.id_medico

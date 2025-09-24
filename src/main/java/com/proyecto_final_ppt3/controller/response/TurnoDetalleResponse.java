@@ -19,6 +19,8 @@ public class TurnoDetalleResponse {
     private String paciente;
     private String dniPaciente;
     private String medico;
+    private String hora;
+    private String estado;
 
     public static TurnoDetalleResponse fromTurnoDetalleProjection(TurnoDetalleProjection turnoDetalleProjection){
         return TurnoDetalleResponse.builder()
@@ -27,6 +29,8 @@ public class TurnoDetalleResponse {
                 .paciente(turnoDetalleProjection.getPaciente())
                 .dniPaciente(turnoDetalleProjection.getDniPaciente())
                 .medico(turnoDetalleProjection.getMedico())
+                .hora(turnoDetalleProjection.getHora())
+                .estado(turnoDetalleProjection.getEstado())
                 .build();
     }
 }
