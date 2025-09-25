@@ -8,9 +8,12 @@ import com.proyecto_final_ppt3.Repository.MedicoRespository;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.controller.request.LoginRequest;
 import com.proyecto_final_ppt3.controller.response.LoginResponse;
+import com.proyecto_final_ppt3.handler.UsuarioNotFoundException;
 import com.proyecto_final_ppt3.service.LoginService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,15 +28,24 @@ public class LoginServiceImpl implements LoginService {
 
     private AdministrativoRepository administrativoRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public List<LoginResponse> login(LoginRequest loginRequest) {
         List<LoginResponse> loginResponse;
 
         switch (loginRequest.getTipoUsuario()) {
             case "Paciente":
-                List<Paciente> pacientes = pacienteRepository.findByDniAndContrasenia(loginRequest.getDni(), loginRequest.getContra());
-                loginResponse = pacientes.stream().map(LoginResponse::fromPaciente).toList();
-                break;
+                List<Paciente> pacientes = pacienteRepository.findByDni(loginRequest.getDni());
+            if (pacientes.isEmpty()) {
+                throw new UsuarioNotFoundException("usuario no encontrado");
+            }
+            Paciente paciente = pacientes.get(0); // tomás el primero
+            if (!passwordEncoder.matches(loginRequest.getContra(), paciente.getContrasenia())) {
+                throw new IllegalArgumentException("Contraseña incorrecta");
+            }
+            return List.of(LoginResponse.fromPaciente(paciente));
+             
             case "medico":
                 List<Medico> medicos = medicoRespository.findByDniAndContrasenia(loginRequest.getDni(), loginRequest.getContra());
                 loginResponse = medicos.stream().map(LoginResponse::fromMedico).toList();

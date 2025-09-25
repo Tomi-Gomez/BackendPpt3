@@ -1,6 +1,8 @@
 package com.proyecto_final_ppt3.controller;
 
+import com.proyecto_final_ppt3.controller.request.MedicoRequest;
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
+import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import com.proyecto_final_ppt3.controller.response.PacienteResponse;
 import com.proyecto_final_ppt3.controller.response.RegistroResponse;
 import com.proyecto_final_ppt3.service.PacienteService;
@@ -28,5 +30,10 @@ public class PacienteController {
         return paciente.pacienteById(id);
     }
 
+    @PutMapping("/pacientes/{id}")
+    public ResponseEntity<PacienteResponse> updatePaciente(@PathVariable Integer id,@RequestBody UsuarioRequest usuarioRequest) {
+        usuarioRequest.setId(id);
+        return ResponseEntity.ok(paciente.updatedPaciente(usuarioRequest));
+    }
 
 }

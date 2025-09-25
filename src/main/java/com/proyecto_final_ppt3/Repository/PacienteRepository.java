@@ -13,8 +13,6 @@ import java.util.Optional;
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente,Integer> {
 
-    List<Paciente> findByDniAndContrasenia(Integer dni, String contra);
-
     List<Paciente> findByDni(Integer dni);
     
     Optional<Paciente> findByEmail(String email);

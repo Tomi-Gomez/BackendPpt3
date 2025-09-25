@@ -54,12 +54,9 @@ public class MedicoServiceImp implements MedicoService {
 
         medico.setNombre(medicoRequest.getNombre());
         medico.setApellido(medicoRequest.getApellido());
-        medico.setDni(medicoRequest.getDni());
         medico.setEmail(medicoRequest.getEmail());
-        medico.setContrasenia(medicoRequest.getContra());
         medico.setTelefono(medicoRequest.getTelefono());
         medico.setAvatar(medicoRequest.getAvatar());
-        medico.setMatricula(medicoRequest.getMatricula());
         medico.setEspecialidad(medicoRequest.getEspecialidad());
 
         medicoRespository.save(medico);

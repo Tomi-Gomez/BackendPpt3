@@ -6,11 +6,13 @@ import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
 import com.proyecto_final_ppt3.controller.response.PacienteResponse;
 import com.proyecto_final_ppt3.controller.response.RegistroResponse;
 import com.proyecto_final_ppt3.handler.PacienteExistenteException;
+import com.proyecto_final_ppt3.handler.UsuarioNotFoundException;
 import com.proyecto_final_ppt3.service.PacienteService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +23,7 @@ import java.util.Objects;
 public class PacienteServiceImpl implements PacienteService {
 
     private PacienteRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public RegistroResponse registrar(UsuarioRequest usuarioRequest) {
@@ -34,7 +37,6 @@ public class PacienteServiceImpl implements PacienteService {
         int ultimoNumero = 0;
 
         if (ultimaCredencial != null && !ultimaCredencial.isBlank()) {
-
             ultimoNumero = Integer.parseInt(ultimaCredencial.replaceAll("\\s", ""));
         }
 
@@ -50,6 +52,7 @@ public class PacienteServiceImpl implements PacienteService {
         );
 
         Paciente paciente = Paciente.fromUsuarioRequest(usuarioRequest, nuevaCredencial);
+        paciente.setContrasenia(passwordEncoder.encode(usuarioRequest.getContra()));
         try {
             repository.save(paciente);
         } catch (Exception e) {
@@ -63,5 +66,22 @@ public class PacienteServiceImpl implements PacienteService {
     public List<PacienteResponse> pacienteById(Integer idPaciente) {
         List<Paciente> pacientes = repository.findByDni(idPaciente);
         return pacientes.stream().map(PacienteResponse::fromPaciente).toList();
+    }
+
+    @Override
+    public PacienteResponse updatedPaciente(UsuarioRequest usuarioRequest) {
+        Paciente paciente = repository.findById(usuarioRequest.getId())
+                .orElseThrow(() -> new UsuarioNotFoundException("Usuario no encontrado"));
+
+        paciente.setNombre(usuarioRequest.getNombre());
+        paciente.setApellido(usuarioRequest.getApellido());
+        paciente.setEmail(usuarioRequest.getEmail());
+        paciente.setTelefono(usuarioRequest.getTelefono());
+        paciente.setAvatar(usuarioRequest.getAvatar());
+        paciente.setDni(usuarioRequest.getDni());
+
+        repository.save(paciente);
+
+        return PacienteResponse.fromPaciente(paciente);
     }
 }
