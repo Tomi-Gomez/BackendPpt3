@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @AllArgsConstructor
-@SuperBuilder
 public class Administrativo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +26,4 @@ public class Administrativo {
     private Integer telefono;
     private String avatar;
 
-    public static Administrativo toAdministrativo(UsuarioRequest usuarioRequest) {
-        return Administrativo.builder()
-                .id(usuarioRequest.getId())
-                .dni(usuarioRequest.getDni())
-                .email(usuarioRequest.getEmail())
-                .nombre(usuarioRequest.getNombre())
-                .apellido(usuarioRequest.getApellido())
-                .contrasenia(usuarioRequest.getContra())
-                .build();
-    }
 }

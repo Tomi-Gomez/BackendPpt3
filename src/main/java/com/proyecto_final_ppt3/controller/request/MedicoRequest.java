@@ -18,18 +18,4 @@ public class MedicoRequest {
     private String matricula;
     private String habilitacion;
     private String avatar;
-
-    public static Medico toMedico(MedicoRequest medicoRequest){
-        return Medico.builder()
-                .email(medicoRequest.getEmail())
-                .dni(medicoRequest.getDni())
-                .nombre(medicoRequest.getNombre())
-                .apellido(medicoRequest.getApellido())
-                .telefono(medicoRequest.getTelefono())
-                .contrasenia(medicoRequest.getContra())
-                .especialidad(medicoRequest.getEspecialidad())
-                .matricula(medicoRequest.getMatricula())
-                .habilitacion(medicoRequest.getHabilitacion())
-                .build();
-    }
 }
