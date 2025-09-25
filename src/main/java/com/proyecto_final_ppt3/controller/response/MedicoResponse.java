@@ -13,6 +13,7 @@ public class MedicoResponse extends UsuarioResponse {
     private String matricula;
     private String especialidad;
     private String habilitacion;
+    private String avatar;
 
     public static MedicoResponse fromMedico(Medico medico){
         return MedicoResponse.builder()
@@ -27,6 +28,7 @@ public class MedicoResponse extends UsuarioResponse {
                 .matricula(medico.getMatricula())
                 .especialidad(medico.getEspecialidad())
                 .habilitacion(medico.getHabilitacion())
+                .avatar(medico.getAvatar())
                 .build();
 
     }

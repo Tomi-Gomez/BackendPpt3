@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente,Integer> {
@@ -15,6 +16,8 @@ public interface PacienteRepository extends JpaRepository<Paciente,Integer> {
     List<Paciente> findByDniAndContrasenia(Integer dni, String contra);
 
     List<Paciente> findByDni(Integer dni);
+    
+    Optional<Paciente> findByEmail(String email);
 
     @Query("SELECT MAX(p.credencial) FROM Paciente p")
     String findUltimaCredencial();

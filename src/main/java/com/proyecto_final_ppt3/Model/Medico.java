@@ -47,6 +47,7 @@ public class Medico {
                 .especialidad(medicoRequest.getEspecialidad())
                 .matricula(medicoRequest.getMatricula())
                 .habilitacion(medicoRequest.getHabilitacion())
+                .avatar(medicoRequest.getAvatar()) 
                 .build();
     }
 }
