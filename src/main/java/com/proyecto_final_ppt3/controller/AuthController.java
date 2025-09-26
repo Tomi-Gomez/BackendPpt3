@@ -5,6 +5,7 @@ import com.proyecto_final_ppt3.Model.PasswordResetToken;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.Repository.PasswordResetTokenRepository;
 import com.proyecto_final_ppt3.service.PasswordResetService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,18 +15,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     private final PacienteRepository pacienteRepository;
     private final PasswordResetService passwordResetService;
-
-    public AuthController(PacienteRepository pacienteRepository,
-                          PasswordResetService passwordResetService) {
-        this.pacienteRepository = pacienteRepository;
-        this.passwordResetService = passwordResetService;
-    }
 
     @PostMapping("/forgot-password")
     public ResponseEntity<Map<String, String>> forgotPassword(@RequestBody Map<String, String> request) {

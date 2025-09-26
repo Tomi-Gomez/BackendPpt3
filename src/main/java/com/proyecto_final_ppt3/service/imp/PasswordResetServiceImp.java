@@ -6,6 +6,7 @@ import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.Repository.PasswordResetTokenRepository;
 import com.proyecto_final_ppt3.service.EmailService;
 import com.proyecto_final_ppt3.service.PasswordResetService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+@AllArgsConstructor
 @Service
 public class PasswordResetServiceImp implements PasswordResetService {
 
@@ -20,16 +22,6 @@ public class PasswordResetServiceImp implements PasswordResetService {
     private final PasswordResetTokenRepository tokenRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
-
-    public PasswordResetServiceImp(PacienteRepository pacienteRepository,
-                                   PasswordResetTokenRepository tokenRepository,
-                                   EmailService emailService,
-                                   PasswordEncoder passwordEncoder) {
-        this.pacienteRepository = pacienteRepository;
-        this.tokenRepository = tokenRepository;
-        this.emailService = emailService;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public void createPasswordResetTokenForEmail(String email) {
