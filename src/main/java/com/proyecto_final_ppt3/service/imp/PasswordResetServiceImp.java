@@ -4,6 +4,8 @@ import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Model.PasswordResetToken;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.Repository.PasswordResetTokenRepository;
+import com.proyecto_final_ppt3.controller.response.AuthResponse;
+import com.proyecto_final_ppt3.handler.PacienteNotFoundException;
 import com.proyecto_final_ppt3.service.EmailService;
 import com.proyecto_final_ppt3.service.PasswordResetService;
 import lombok.AllArgsConstructor;
@@ -24,12 +26,11 @@ public class PasswordResetServiceImp implements PasswordResetService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void createPasswordResetTokenForEmail(String email) {
+    public AuthResponse createPasswordResetTokenForEmail(String email) {
         Optional<Paciente> pacienteOpt = pacienteRepository.findByEmail(email);
 
         if (pacienteOpt.isEmpty()) {
-            // No revelar si existe o no → retornamos igual
-            return;
+            throw new PacienteNotFoundException("No se encontro el paciente con el email.");
         }
 
         Paciente paciente = pacienteOpt.get();
@@ -48,10 +49,12 @@ public class PasswordResetServiceImp implements PasswordResetService {
 
         // Enviar email real
         emailService.sendPasswordResetEmail(paciente.getEmail(), token);
+
+        return new AuthResponse("Si el email está registrado, se enviaron las instrucciones");
     }
 
     @Override
-    public void resetPassword(String token, String newPassword) {
+    public AuthResponse resetPassword(String token, String newPassword) {
         PasswordResetToken resetToken = tokenRepository.findByToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("El token no existe o ya fue usado."));
 
@@ -65,5 +68,7 @@ public class PasswordResetServiceImp implements PasswordResetService {
 
         // Borrar token después de usarlo
         tokenRepository.delete(resetToken);
+
+        return new AuthResponse("Contraseña restablecida correctamente");
     }
 }

@@ -52,7 +52,7 @@ public class AdministrativoServiceImp implements AdministrativoService {
      @PostConstruct
     public void initDefaultAdmin() {
         if (repository.count() == 0) {
-            Administrativo admin = new Administrativo(null, null, null, null, null, null, null, null, null);
+            Administrativo admin = new Administrativo();
             admin.setNombre("Administrador");
             admin.setApellido("General");
             admin.setDni(12345678);

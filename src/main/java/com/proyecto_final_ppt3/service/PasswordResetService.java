@@ -1,6 +1,8 @@
 package com.proyecto_final_ppt3.service;
 
+import com.proyecto_final_ppt3.controller.response.AuthResponse;
+
 public interface PasswordResetService {
-    void createPasswordResetTokenForEmail(String email);
-    void resetPassword(String token, String newPassword);
+    AuthResponse createPasswordResetTokenForEmail(String email);
+    AuthResponse resetPassword(String token, String newPassword);
 }

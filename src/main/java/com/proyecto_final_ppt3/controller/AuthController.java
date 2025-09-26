@@ -4,6 +4,9 @@ import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Model.PasswordResetToken;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.Repository.PasswordResetTokenRepository;
+import com.proyecto_final_ppt3.controller.request.ForgotPasswordRequest;
+import com.proyecto_final_ppt3.controller.request.ResetPasswordRequest;
+import com.proyecto_final_ppt3.controller.response.AuthResponse;
 import com.proyecto_final_ppt3.service.PasswordResetService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,24 +27,21 @@ public class AuthController {
     private final PasswordResetService passwordResetService;
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<Map<String, String>> forgotPassword(@RequestBody Map<String, String> request) {
-        passwordResetService.createPasswordResetTokenForEmail(request.get("email"));
-
-        Map<String, String> response = new HashMap<>();
-        response.put("mensaje", "Si el email está registrado, se enviaron las instrucciones");
+    public ResponseEntity<AuthResponse> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        AuthResponse response = passwordResetService.createPasswordResetTokenForEmail(request.getEmail());
 
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<Map<String, String>> resetPassword(@RequestParam String token,
-                                                        @RequestBody Map<String, String> request) {
-    passwordResetService.resetPassword(token, request.get("password"));
+    public ResponseEntity<AuthResponse> resetPassword(
+            @RequestParam String token,
+            @RequestBody ResetPasswordRequest request
+    ) {
+        AuthResponse response = passwordResetService.resetPassword(token, request.getPassword());
 
-    Map<String, String> response = new HashMap<>();
-    response.put("mensaje", "Contraseña restablecida correctamente");
+        return ResponseEntity.ok(response);
+    }
 
-    return ResponseEntity.ok(response);
-}
 }
 
