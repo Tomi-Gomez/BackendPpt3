@@ -12,7 +12,7 @@ public class DisponibilidadRequest {
     private int id;
     private String desde;
     private String hasta;
-    private int idMedico;
+    private Integer idMedico;
     private String especialidad;
     private String fecha;
     private List<String> dias;

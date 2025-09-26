@@ -14,4 +14,5 @@ public interface MedicoService {
     List<MedicoResponse> medicosById(Integer idMedico);
     List<MedicoResponse> getMedicos();
     MedicoResponse updatedMedico(MedicoRequest medicoRequest);
+    MedicoResponse updateMedicoHabilitacion(MedicoRequest medicoRequest);
 }

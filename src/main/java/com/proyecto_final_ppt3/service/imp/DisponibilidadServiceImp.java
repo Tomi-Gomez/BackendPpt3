@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DisponibilidadServiceImp implements DisponibilidadService {
@@ -36,4 +37,10 @@ public class DisponibilidadServiceImp implements DisponibilidadService {
 
         return DisponibilidadResponse.fromDisponibilidad(disponibilidad);
     }
+    
+    @Override
+    public Optional<DisponibilidadResponse> buscarPorMedicoId(Integer idMedico) {
+    return disponibilidadRepository.findByIdMedico(idMedico)
+            .map(DisponibilidadResponse::fromDisponibilidad);
+}
 }

@@ -50,10 +50,17 @@ public class LoginServiceImpl implements LoginService {
                 List<Medico> medicos = medicoRespository.findByDniAndContrasenia(loginRequest.getDni(), loginRequest.getContra());
                 loginResponse = medicos.stream().map(LoginResponse::fromMedico).toList();
                 break;
-            case "admin":
-                List<Administrativo> admins = administrativoRepository.findByDniAndContrasenia(loginRequest.getDni(), loginRequest.getContra());
-                loginResponse = admins.stream().map(LoginResponse::fromAdmin).toList();
-                break;
+            case "administrativo":
+                List<Administrativo> admins = administrativoRepository.findByDni(loginRequest.getDni());
+                if (admins.isEmpty()) {
+                throw new UsuarioNotFoundException("usuario no encontrado");
+            }
+            Administrativo administrativo = admins.get(0); 
+            if (!passwordEncoder.matches(loginRequest.getContra(), administrativo.getContrasenia())) {
+                throw new IllegalArgumentException("Contraseña incorrecta");
+            }
+            return List.of(LoginResponse.fromAdministrativo(administrativo));
+            
             default:
                 return null;
         }

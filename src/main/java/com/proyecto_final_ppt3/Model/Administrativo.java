@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor 
 public class Administrativo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

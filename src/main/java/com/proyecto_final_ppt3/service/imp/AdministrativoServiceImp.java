@@ -9,8 +9,12 @@ import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import com.proyecto_final_ppt3.handler.AdministrativoInsertException;
 import com.proyecto_final_ppt3.handler.MedicosNotFoundException;
 import com.proyecto_final_ppt3.service.AdministrativoService;
+
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -21,6 +25,8 @@ public class AdministrativoServiceImp implements AdministrativoService {
     private MedicoRespository medicoRespository;
 
     private AdministrativoRepository repository;
+
+    private final PasswordEncoder passwordEncoder;
 
     //Cheuqear si esto esta bien, porque deberia poder
     @Override
@@ -40,6 +46,23 @@ public class AdministrativoServiceImp implements AdministrativoService {
             return MedicoResponse.fromMedico(medicoGuardado);
         }catch (Exception e){
             throw new MedicosNotFoundException("Error al insertar el medico" + e);
+        }
+    }
+
+     @PostConstruct
+    public void initDefaultAdmin() {
+        if (repository.count() == 0) {
+            Administrativo admin = new Administrativo(null, null, null, null, null, null, null, null, null);
+            admin.setNombre("Administrador");
+            admin.setApellido("General");
+            admin.setDni(12345678);
+            admin.setEmail("admin@clinica.com");
+            admin.setContrasenia(passwordEncoder.encode("admin123"));
+            admin.setTelefono(111111111);
+            admin.setTipoUsuario("administrativo");
+
+            repository.save(admin);
+            System.out.println("✅ Admin por defecto creado");
         }
     }
 

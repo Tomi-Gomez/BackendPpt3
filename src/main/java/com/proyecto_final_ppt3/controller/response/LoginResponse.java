@@ -13,7 +13,7 @@ public class LoginResponse {
     private Integer dni;
     private String contra;
     private String tipoUsuario;
-    private String habilitacion;
+    private Boolean habilitacion;
     private String nombre;
 
     public static LoginResponse fromPaciente(Paciente paciente){
@@ -37,7 +37,7 @@ public class LoginResponse {
                 .build();
     }
 
-    public static LoginResponse fromAdmin(Administrativo administrativo){
+    public static LoginResponse fromAdministrativo(Administrativo administrativo){
         return LoginResponse.builder()
                 .id(administrativo.getId())
                 .dni(administrativo.getDni())

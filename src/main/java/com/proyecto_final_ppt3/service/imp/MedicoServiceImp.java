@@ -63,4 +63,17 @@ public class MedicoServiceImp implements MedicoService {
 
         return MedicoResponse.fromMedico(medico);
     }
+
+    @Override
+    public MedicoResponse updateMedicoHabilitacion(MedicoRequest medicoRequest) {
+        Medico medico = medicoRespository.findById(medicoRequest.getId())
+                .orElseThrow(() ->
+                        new MedicoNotFoundException(medicoRequest.getId()));
+
+        medico.setHabilitacion(medicoRequest.getHabilitacion());
+
+        medicoRespository.save(medico);
+
+        return MedicoResponse.fromMedico(medico);
+    }
 }

@@ -35,4 +35,10 @@ public class MedicoController {
         medicoRequest.setId(id);
         return ResponseEntity.ok(aplicacion.updatedMedico(medicoRequest));
     }
+
+     @PutMapping("/medicoHabilitacion/{id}")
+    public ResponseEntity<MedicoResponse> updateMedicoHabilitacion(@PathVariable Integer id,@RequestBody MedicoRequest medicoRequest) {
+        medicoRequest.setId(id);
+        return ResponseEntity.ok(aplicacion.updateMedicoHabilitacion(medicoRequest));
+    }
 }

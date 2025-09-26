@@ -27,4 +27,11 @@ public class DisponibilidadController {
     public DisponibilidadResponse guardarDisponibilidad(@RequestBody DisponibilidadRequest disponibilidad) {
         return disponibilidadService.postGuardarDisponibilidad(disponibilidad);
     }
+
+    @GetMapping("/disponibilidad/{idMedico}")
+    public ResponseEntity<DisponibilidadResponse> getDisponibilidadPorMedico(@PathVariable Integer idMedico) {
+        return disponibilidadService.buscarPorMedicoId(idMedico)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

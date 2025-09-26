@@ -32,7 +32,7 @@ public class Medico {
     private String avatar;
     private String matricula;
     private String especialidad;
-    private String habilitacion;
+    private Boolean habilitacion;
 
     //Chequear que en el back de nico no inserta el avatar a la hora de registrar..... pero si llega del front
 

@@ -16,6 +16,6 @@ public class MedicoRequest {
     private String contra;
     private String especialidad;
     private String matricula;
-    private String habilitacion;
+    private Boolean habilitacion;
     private String avatar;
 }
