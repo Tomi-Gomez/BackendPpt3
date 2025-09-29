@@ -1,5 +1,6 @@
 package com.proyecto_final_ppt3.Model;
 
+import com.proyecto_final_ppt3.controller.request.TurnoRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,4 +25,17 @@ public class Turno {
     private String calificacion;
     private String especialidad;
 
+
+    public static Turno FromTurnoRequest(TurnoRequest turnoRequest){
+        return Turno.builder()
+                .idPaciente(turnoRequest.getIdPaciente())
+                .idMedico(turnoRequest.getIdMedico())
+                .fecha(turnoRequest.getFecha())
+                .hora(turnoRequest.getHora())
+                .observaciones(turnoRequest.getObservaciones())
+                .estado("PEDIENTE")
+                .calificacion("PENDIENTE")
+                .especialidad(turnoRequest.getEspecialidad())
+                .build();
+    }
 }

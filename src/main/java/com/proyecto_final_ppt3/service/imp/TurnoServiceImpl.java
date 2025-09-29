@@ -1,31 +1,66 @@
 package com.proyecto_final_ppt3.service.imp;
 
-import com.proyecto_final_ppt3.Model.DTO.TurnoDTO;
+import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Model.Turno;
+import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.Repository.TurnoRepository;
 import com.proyecto_final_ppt3.controller.request.TurnoRequest;
 import com.proyecto_final_ppt3.controller.response.TurnoDetalleResponse;
 import com.proyecto_final_ppt3.controller.response.TurnoResponse;
 import com.proyecto_final_ppt3.dto.TurnoDetalleProjection;
+import com.proyecto_final_ppt3.service.EmailService;
 import com.proyecto_final_ppt3.service.TurnoService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @AllArgsConstructor
 @Service
 public class TurnoServiceImpl implements TurnoService {
 
     private TurnoRepository turnoRepository;
 
+    private ReporteServiceImp reporteServiceImp;
+
+    private EmailService emailService;
+
+    private PacienteRepository pacienteRepository;
+
     @Override
     public TurnoResponse guardarTurno(TurnoRequest turnoRequest) {
-        Turno turno = TurnoRequest.toTurno(turnoRequest);
+        try {
+            Turno turno = Turno.FromTurnoRequest(turnoRequest);
 
-        turnoRepository.save(turno);
-        return TurnoResponse.fromTurno(turno);
+            log.info("Buscando paciente con idPaciente={}", turno.getIdPaciente());
+
+            Turno finalTurno = turno;
+            Paciente paciente = pacienteRepository.findById(turno.getIdPaciente())
+                    .orElseThrow(() -> new RuntimeException("Paciente no encontrado con id " + finalTurno.getIdPaciente()));
+
+            log.info("TurnoRequest recibido: {}", turnoRequest);
+            log.info("Turno a guardar: {}", turno);
+
+            // 1. Guardar turno en DB (ya con id asignado)
+            turno = turnoRepository.save(turno);
+
+            // 2. Generar PDF
+            byte[] pdfBytes = reporteServiceImp.generarReporteTurno(turno);
+
+            // 3. Enviar email al paciente
+            emailService.sendTurnoPdfEmail(
+                    paciente.getEmail(),
+                    pdfBytes,
+                    "Turno_" + turno.getId() + ".pdf"
+            );
+
+            return TurnoResponse.fromTurno(turno);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al guardar turno: " + e.getMessage(), e);
+        }
     }
 
     @Override
