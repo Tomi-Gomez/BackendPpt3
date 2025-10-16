@@ -1,5 +1,6 @@
 package com.proyecto_final_ppt3.service.imp;
 
+import com.proyecto_final_ppt3.Enum.ParentescoEnum;
 import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
@@ -10,74 +11,95 @@ import com.proyecto_final_ppt3.handler.PacienteNotFoundException;
 import com.proyecto_final_ppt3.handler.UsuarioNotFoundException;
 import com.proyecto_final_ppt3.service.PacienteService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 
 @Service
 @AllArgsConstructor
 public class PacienteServiceImpl implements PacienteService {
 
-    private PacienteRepository repository;
+    private final PacienteRepository repository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public RegistroResponse registrar(UsuarioRequest usuarioRequest) {
-        List<Paciente> paciente1 = repository.findByDni(usuarioRequest.getDni());
-
-        if (!paciente1.isEmpty()) {
+        List<Paciente> pacientesExistentes = repository.findByDni(usuarioRequest.getDni());
+        if (!pacientesExistentes.isEmpty()) {
             throw new PacienteExistenteException("El paciente ya existe");
         }
 
-        String ultimaCredencial = repository.findUltimaCredencial();
-        int ultimoNumero = 0;
+        String credencial = "";
 
-        if (ultimaCredencial != null && !ultimaCredencial.isBlank()) {
-            ultimoNumero = Integer.parseInt(ultimaCredencial.replaceAll("\\s", ""));
+        // Caso titular
+        if (usuarioRequest.getDniTitular() == 0) {
+            String ultimaCredencial = repository.findUltimaCredencial();
+            int ultimoNumero;
+
+            if (ultimaCredencial != null && !ultimaCredencial.isBlank()) {
+                String[] parts = ultimaCredencial.split("-");
+                ultimoNumero = Integer.parseInt(parts[0]);
+
+                if (parts.length == 4) {
+                    ultimoNumero = ultimoNumero + 1;
+                    parts[0] = String.format("%011d", ultimoNumero);
+                    parts[2] = String.format("%02d", 0);
+                    credencial = String.join("-", parts);
+                }
+            } else {
+                String padded = String.format("%018d", 0);
+
+                credencial = String.format("%s-%s-%s-%s",
+                        padded.substring(0, 11),
+                        padded.substring(11, 14),
+                        padded.substring(14, 16),
+                        padded.substring(16, 18)
+                );
+
+                String[] parts = credencial.split("-");
+                parts[0] = String.format("%011d", 1);
+                credencial = String.join("-", parts);
+            }
+        }
+        // Caso familiar / dependiente
+        else {
+            List<Paciente> pacienteTitular = repository.findByDni(usuarioRequest.getDniTitular());
+            credencial = pacienteTitular.get(0).getCredencial();
+
+            String[] parts = credencial.split("-");
+            if (parts.length == 4) {
+                Integer parentesco = ParentescoEnum.obtenerCodigoPorNombre(usuarioRequest.getParentesco());
+                parts[2] = String.format("%02d", parentesco);
+                credencial = String.join("-", parts);
+            }
         }
 
-        int siguiente = ultimoNumero + 1;
-
-        String padded = String.format("%012d", siguiente);
-
-        String nuevaCredencial = String.format("%s %s %s %s",
-                padded.substring(0, 2),
-                padded.substring(2, 4),
-                padded.substring(4, 8),
-                padded.substring(8, 12)
-        );
-
-        Paciente paciente = Paciente.fromUsuarioRequest(usuarioRequest, nuevaCredencial);
+        Paciente paciente = Paciente.fromUsuarioRequest(usuarioRequest, credencial);
         paciente.setContrasenia(passwordEncoder.encode(usuarioRequest.getContra()));
+
         try {
             repository.save(paciente);
+            return new RegistroResponse("ok");
         } catch (Exception e) {
             return new RegistroResponse("Error en registro");
         }
-
-        return new RegistroResponse("ok");
     }
 
     @Override
     public List<PacienteResponse> pacienteById(Integer idPaciente) {
         List<Paciente> pacientes = repository.findByDni(idPaciente);
-        return pacientes.stream().map(PacienteResponse::fromPaciente).toList();
+        return pacientes.stream()
+                .map(PacienteResponse::fromPaciente)
+                .toList();
     }
 
     @Override
     public PacienteResponse buscarPorDni(Integer dni) {
         List<Paciente> pacientes = repository.findByDni(dni);
-
         if (pacientes.isEmpty()) {
             throw new PacienteNotFoundException("El paciente no existe");
         }
-
         return PacienteResponse.fromPaciente(pacientes.get(0));
     }
 
@@ -94,7 +116,6 @@ public class PacienteServiceImpl implements PacienteService {
         paciente.setDni(usuarioRequest.getDni());
 
         repository.save(paciente);
-
         return PacienteResponse.fromPaciente(paciente);
     }
 }
