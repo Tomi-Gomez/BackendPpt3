@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface DisponibilidadRepository extends JpaRepository<Disponibilidad, Integer> {
 
     List<Disponibilidad> findByEspecialidad(String especialidad);
-    Optional<Disponibilidad> findByIdMedico(Integer idMedico);
+    Optional<Disponibilidad> findByMedico_Id(Integer idMedico);
 }

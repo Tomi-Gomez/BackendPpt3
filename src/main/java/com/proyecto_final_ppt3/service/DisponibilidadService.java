@@ -11,5 +11,5 @@ public interface DisponibilidadService {
 
     DisponibilidadResponse postGuardarDisponibilidad(DisponibilidadRequest disponibilidad);
 
-    Optional<DisponibilidadResponse> buscarPorMedicoId(Integer idMedico);
+    Optional<DisponibilidadResponse> buscarPorMedicoId(Integer id_medico);
 }

@@ -25,7 +25,7 @@ public class DisponibilidadResponse {
                 .id(disponibilidad.getId())
                 .desde(disponibilidad.getDesde())
                 .hasta(disponibilidad.getHasta())
-                .idMedico(disponibilidad.getIdMedico())
+                .idMedico(disponibilidad.getMedico().getId())
                 .especialidad(disponibilidad.getEspecialidad())
                 .fecha(disponibilidad.getFecha())
                 .dias(disponibilidad.getDias())

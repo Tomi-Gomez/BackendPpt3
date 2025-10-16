@@ -33,14 +33,17 @@ public class DisponibilidadServiceImp implements DisponibilidadService {
     @Override
     public DisponibilidadResponse postGuardarDisponibilidad(DisponibilidadRequest disponibilidadRequest) {
         Disponibilidad disponibilidad = DisponibilidadRequest.toDisponibilidad(disponibilidadRequest);
-        disponibilidadRepository.save(disponibilidad);
 
-        return DisponibilidadResponse.fromDisponibilidad(disponibilidad);
+        // Guardar y obtener la entidad persistida con su ID generado
+        Disponibilidad guardada = disponibilidadRepository.save(disponibilidad);
+
+        // Retornar la versión persistida convertida a Response
+        return DisponibilidadResponse.fromDisponibilidad(guardada);
     }
     
     @Override
     public Optional<DisponibilidadResponse> buscarPorMedicoId(Integer idMedico) {
-    return disponibilidadRepository.findByIdMedico(idMedico)
+    return disponibilidadRepository.findByMedico_Id(idMedico) 
             .map(DisponibilidadResponse::fromDisponibilidad);
 }
 }
