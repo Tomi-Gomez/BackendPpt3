@@ -48,7 +48,6 @@ public class PacienteServiceImpl implements PacienteService {
                     credencial = String.join("-", parts);
                 }
             } else {
-                int init = 1;
                 String padded = String.format("%018d", 0);
 
                 credencial = String.format("%s-%s-%s-%s",
@@ -59,7 +58,7 @@ public class PacienteServiceImpl implements PacienteService {
                 );
 
                 String[] parts = credencial.split("-");
-                parts[0] = String.format("%11d", 1);
+                parts[0] = String.format("%011d", 1);
                 credencial = String.join("-", parts);
             }
         }
