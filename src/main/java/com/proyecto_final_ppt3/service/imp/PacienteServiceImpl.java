@@ -6,6 +6,7 @@ import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
 import com.proyecto_final_ppt3.controller.response.PacienteResponse;
 import com.proyecto_final_ppt3.controller.response.RegistroResponse;
 import com.proyecto_final_ppt3.handler.PacienteExistenteException;
+import com.proyecto_final_ppt3.handler.PacienteNotFoundException;
 import com.proyecto_final_ppt3.handler.UsuarioNotFoundException;
 import com.proyecto_final_ppt3.service.PacienteService;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 @Service
@@ -66,6 +68,17 @@ public class PacienteServiceImpl implements PacienteService {
     public List<PacienteResponse> pacienteById(Integer idPaciente) {
         List<Paciente> pacientes = repository.findByDni(idPaciente);
         return pacientes.stream().map(PacienteResponse::fromPaciente).toList();
+    }
+
+    @Override
+    public PacienteResponse buscarPorDni(Integer dni) {
+        List<Paciente> pacientes = repository.findByDni(dni);
+
+        if (pacientes.isEmpty()) {
+            throw new PacienteNotFoundException("El paciente no existe");
+        }
+
+        return PacienteResponse.fromPaciente(pacientes.get(0));
     }
 
     @Override

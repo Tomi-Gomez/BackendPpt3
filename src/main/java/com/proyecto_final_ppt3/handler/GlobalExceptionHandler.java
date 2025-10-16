@@ -86,4 +86,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @ExceptionHandler(PacienteNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlerPacienteNotFoundException(AdministrativoInsertException ex, WebRequest webRequest){
+        ErrorResponse error = ErrorResponse.builder()
+                .mensaje(ex.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .timestamp(LocalDateTime.now())
+                .path(webRequest.getDescription(false))
+                .build();
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
 }

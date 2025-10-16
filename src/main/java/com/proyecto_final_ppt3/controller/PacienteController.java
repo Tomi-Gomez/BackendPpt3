@@ -36,4 +36,9 @@ public class PacienteController {
         return ResponseEntity.ok(paciente.updatedPaciente(usuarioRequest));
     }
 
+    @GetMapping("/buscarPorDni/{dni}")
+    public ResponseEntity<PacienteResponse> buscarDni(@PathVariable Integer dni) {
+        return  ResponseEntity.ok(paciente.buscarPorDni(dni));
+    }
+
 }
