@@ -20,4 +20,6 @@ public class UsuarioRequest {
     private String credencial;
     private String matricula;
     private String avatar;
+    private Integer dniTitular;
+    private String parentesco;
 }
