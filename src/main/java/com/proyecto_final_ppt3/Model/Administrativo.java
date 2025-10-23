@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+@Builder
 @Entity
 @Getter
 @Setter
