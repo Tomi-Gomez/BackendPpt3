@@ -44,7 +44,8 @@ public class PacienteServiceImpl implements PacienteService {
                 if (parts.length == 4) {
                     ultimoNumero = ultimoNumero + 1;
                     parts[0] = String.format("%011d", ultimoNumero);
-                    parts[2] = String.format("%02d", 0);
+                    parts[1] = "003";
+                    parts[3] = String.format("%02d", 0);
                     credencial = String.join("-", parts);
                 }
             } else {
@@ -58,6 +59,7 @@ public class PacienteServiceImpl implements PacienteService {
                 );
 
                 String[] parts = credencial.split("-");
+                parts[1] = "003";
                 parts[0] = String.format("%011d", 1);
                 credencial = String.join("-", parts);
             }
@@ -70,7 +72,8 @@ public class PacienteServiceImpl implements PacienteService {
             String[] parts = credencial.split("-");
             if (parts.length == 4) {
                 Integer parentesco = ParentescoEnum.obtenerCodigoPorNombre(usuarioRequest.getParentesco());
-                parts[2] = String.format("%02d", parentesco);
+                parts[1] = "003";
+                parts[3] = String.format("%02d", parentesco);
                 credencial = String.join("-", parts);
             }
         }
