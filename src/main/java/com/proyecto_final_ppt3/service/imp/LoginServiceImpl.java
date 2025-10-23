@@ -47,7 +47,7 @@ public class LoginServiceImpl implements LoginService {
             return List.of(LoginResponse.fromPaciente(paciente));
              
             case "medico":
-                List<Medico> medicos = medicoRespository.findByDniAndContrasenia(loginRequest.getDni(), loginRequest.getContra());
+                List<Medico> medicos = medicoRespository.findByDni(loginRequest.getDni());
 
                 if (medicos.isEmpty()) {
                     throw new UsuarioNotFoundException("usuario no encontrado");

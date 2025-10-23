@@ -3,7 +3,9 @@ package com.proyecto_final_ppt3.controller;
 import com.proyecto_final_ppt3.Model.Administrativo;
 import com.proyecto_final_ppt3.controller.request.AdministrativoRequest;
 import com.proyecto_final_ppt3.controller.request.DisponibilidadRequest;
+import com.proyecto_final_ppt3.controller.request.MedicoRequest;
 import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
+import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import com.proyecto_final_ppt3.service.AdministrativoService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,11 @@ public class AdminController {
     @PostMapping("/insertarAdmin")
     public Administrativo insertarAdmin(@RequestBody  AdministrativoRequest administrativoRequest) {
         return administrativo.insertarAdmin(administrativoRequest);
+    }
+
+    @PostMapping("/insertarMed")
+    public MedicoResponse insertarMedico(@RequestBody MedicoRequest medicoRequest) {
+        return administrativo.insertarMedico(medicoRequest);
     }
 
 

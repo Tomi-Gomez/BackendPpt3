@@ -46,9 +46,10 @@ public class AdministrativoServiceImp implements AdministrativoService {
     @Override
     public MedicoResponse insertarMedico(MedicoRequest medicoRequest) {
         try{
+            medicoRequest.setContra(passwordEncoder.encode(medicoRequest.getContra()));
             Medico medico = Medico.fromUsuarioRequest(medicoRequest);
-            Medico medicoGuardado = medicoRespository.save(medico);
-            return MedicoResponse.fromMedico(medicoGuardado);
+            medicoRespository.save(medico);
+            return MedicoResponse.fromMedico(medico);
         }catch (Exception e){
             throw new MedicosNotFoundException("Error al insertar el medico" + e);
         }
