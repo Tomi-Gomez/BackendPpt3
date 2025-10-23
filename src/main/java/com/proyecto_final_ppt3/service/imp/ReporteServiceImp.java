@@ -1,23 +1,25 @@
 package com.proyecto_final_ppt3.service.imp;
 
+import com.proyecto_final_ppt3.Model.DTO.ReporteMedicoDTO;
 import com.proyecto_final_ppt3.Model.Medico;
 import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Model.Turno;
 import com.proyecto_final_ppt3.Repository.MedicoRespository;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
+import com.proyecto_final_ppt3.Repository.TurnoRepository;
 import com.proyecto_final_ppt3.service.ReportService;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ReporteServiceImp implements ReportService {
@@ -27,6 +29,9 @@ public class ReporteServiceImp implements ReportService {
 
     @Autowired
     private MedicoRespository medicoRespository;
+
+    @Autowired
+    private TurnoRepository turnoRepository;
 
     @Override
     public byte[] generarReporteTurno(Turno turno) {
@@ -63,5 +68,76 @@ public class ReporteServiceImp implements ReportService {
             throw new RuntimeException("No se encontro el paciente solicitado" + e);
         }
 
+    }
+
+
+    @Override
+    public byte[] generarReporteTurnosxMedico(String fechaInicio, String fechaFinal) {
+        try {
+            //Cargar el jrxml como InputStream desde resources
+            InputStream reportStream = new ClassPathResource("templates/report/ReporteMedico.jrxml").getInputStream();
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
+
+            //Traigo la fecha y hora Actual
+            LocalDate fechaActual = LocalDate.now();
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+            Date periodoInicialReporte = formato.parse(fechaInicio);
+            Date periodoFinalReporte = formato.parse(fechaFinal);
+
+            List<Turno> listaTotalTurno = turnoRepository.findAll();
+            List<Turno> listaTurnoReporte = new ArrayList<>();
+
+            for (Turno l : listaTotalTurno){
+                String f = l.getFecha();
+                Date fecha = formato.parse(f);
+
+                if (!fecha.before(periodoInicialReporte) && !fecha.after(periodoFinalReporte)) {
+                    listaTurnoReporte.add(l);
+                }
+            }
+
+            // Creo un map donde le asigno al medico la cantidad de turnos que tuvo en el periodo seleccionado
+            Map<Medico,Integer> cantidadTurnoXMedico = new HashMap<>();
+
+            for (Turno t : listaTurnoReporte){
+                Optional<Medico> m = medicoRespository.findById(t.getIdMedico());
+                Medico medico = null;
+
+                if (m.isPresent()){
+                    medico = m.get();
+                }
+                cantidadTurnoXMedico.put(medico,cantidadTurnoXMedico.getOrDefault(medico,0) + 1 );
+            }
+
+            // Creo una lista donde añado el map anterior y le agrego la espcialidad por ReporteMedicoDTO
+            List<ReporteMedicoDTO> reporte = new ArrayList<>();
+            for(Map.Entry<Medico,Integer> entry : cantidadTurnoXMedico.entrySet()){
+                Medico m = entry.getKey();
+                int cantidad = entry.getValue();
+
+                reporte.add(new ReporteMedicoDTO(
+                        m.getNombre(),
+                        m.getEspecialidad(),
+                        cantidad
+                ));
+            }
+
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reporte);
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("FECHA_ACTUAL", fechaActual.format(dateFormatter));
+            parameters.put("HORA_ACTUAL", LocalTime.now().format(timeFormatter));
+            parameters.put("DATOS_REPORTE", dataSource);
+
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            return JasperExportManager.exportReportToPdf(jasperPrint);
+
+        } catch(Exception e){
+            throw new RuntimeException("No se encontro el paciente solicitado" + e);
+        }
     }
 }
