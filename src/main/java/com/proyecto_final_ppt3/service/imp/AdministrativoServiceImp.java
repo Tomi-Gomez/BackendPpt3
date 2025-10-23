@@ -4,6 +4,7 @@ import com.proyecto_final_ppt3.Model.Administrativo;
 import com.proyecto_final_ppt3.Model.Medico;
 import com.proyecto_final_ppt3.Repository.AdministrativoRepository;
 import com.proyecto_final_ppt3.Repository.MedicoRespository;
+import com.proyecto_final_ppt3.controller.request.AdministrativoRequest;
 import com.proyecto_final_ppt3.controller.request.MedicoRequest;
 import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import com.proyecto_final_ppt3.handler.AdministrativoInsertException;
@@ -30,9 +31,13 @@ public class AdministrativoServiceImp implements AdministrativoService {
 
     //Cheuqear si esto esta bien, porque deberia poder
     @Override
-    public Administrativo insertarAdmin(Administrativo administrativo) {
+    public Administrativo insertarAdmin(AdministrativoRequest administrativoRequest) {
         try {
-            return repository.save(administrativo);
+            administrativoRequest.setContrasenia(passwordEncoder.encode(administrativoRequest.getContrasenia()));
+            
+            Administrativo admin = AdministrativoRequest.administrativo(administrativoRequest);
+            return repository.save(admin);
+
         }catch (Exception e){
             throw new AdministrativoInsertException("Error al insertar un administrativo" + e.getMessage());
         }
@@ -65,6 +70,4 @@ public class AdministrativoServiceImp implements AdministrativoService {
             System.out.println("✅ Admin por defecto creado");
         }
     }
-
-
 }
