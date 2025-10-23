@@ -47,6 +47,7 @@ public class AdministrativoServiceImp implements AdministrativoService {
     public MedicoResponse insertarMedico(MedicoRequest medicoRequest) {
         try{
             medicoRequest.setContra(passwordEncoder.encode(medicoRequest.getContra()));
+            medicoRequest.setHabilitacion(false);
             Medico medico = Medico.fromUsuarioRequest(medicoRequest);
             medicoRespository.save(medico);
             return MedicoResponse.fromMedico(medico);

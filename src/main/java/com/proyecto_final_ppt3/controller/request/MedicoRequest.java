@@ -1,5 +1,6 @@
 package com.proyecto_final_ppt3.controller.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proyecto_final_ppt3.Model.Medico;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +14,7 @@ public class MedicoRequest {
     private String nombre;
     private String apellido;
     private Integer telefono;
+    @JsonProperty("contrasenia")
     private String contra;
     private String especialidad;
     private String matricula;
