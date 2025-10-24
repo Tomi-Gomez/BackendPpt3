@@ -1,157 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
-    <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteTurnero" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="940d4382-de77-4587-8a46-f862787dc21e">
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteTurnero" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="940d4382-de77-4587-8a46-f862787dc21e">
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+    <style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+            <topPen lineWidth="0.5" lineColor="#000000"/>
+            <leftPen lineWidth="0.5" lineColor="#000000"/>
+            <bottomPen lineWidth="0.5" lineColor="#000000"/>
+            <rightPen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+            <topPen lineWidth="0.5" lineColor="#000000"/>
+            <leftPen lineWidth="0.5" lineColor="#000000"/>
+            <bottomPen lineWidth="0.5" lineColor="#000000"/>
+            <rightPen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+        <box>
+            <pen lineWidth="0.5" lineColor="#000000"/>
+            <topPen lineWidth="0.5" lineColor="#000000"/>
+            <leftPen lineWidth="0.5" lineColor="#000000"/>
+            <bottomPen lineWidth="0.5" lineColor="#000000"/>
+            <rightPen lineWidth="0.5" lineColor="#000000"/>
+        </box>
+    </style>
+    <subDataset name="Empty Dataset1" uuid="ba85fbe7-06b4-4f39-aaeb-fae0182ee40d"/>
+    <subDataset name="DatasetReporteMedicos" uuid="d6022703-deb6-41f2-a47a-85951ddcef3a">
         <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-        <style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
-            <box>
-                <pen lineWidth="0.5" lineColor="#000000"/>
-                <topPen lineWidth="0.5" lineColor="#000000"/>
-                <leftPen lineWidth="0.5" lineColor="#000000"/>
-                <bottomPen lineWidth="0.5" lineColor="#000000"/>
-                <rightPen lineWidth="0.5" lineColor="#000000"/>
-            </box>
-        </style>
-        <style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
-            <box>
-                <pen lineWidth="0.5" lineColor="#000000"/>
-                <topPen lineWidth="0.5" lineColor="#000000"/>
-                <leftPen lineWidth="0.5" lineColor="#000000"/>
-                <bottomPen lineWidth="0.5" lineColor="#000000"/>
-                <rightPen lineWidth="0.5" lineColor="#000000"/>
-            </box>
-        </style>
-        <style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
-            <box>
-                <pen lineWidth="0.5" lineColor="#000000"/>
-                <topPen lineWidth="0.5" lineColor="#000000"/>
-                <leftPen lineWidth="0.5" lineColor="#000000"/>
-                <bottomPen lineWidth="0.5" lineColor="#000000"/>
-                <rightPen lineWidth="0.5" lineColor="#000000"/>
-            </box>
-        </style>
-        <subDataset name="Empty Dataset1" uuid="ba85fbe7-06b4-4f39-aaeb-fae0182ee40d"/>
-        <subDataset name="DatasetReporteMedicos" uuid="d6022703-deb6-41f2-a47a-85951ddcef3a">
-            <property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-            <queryString>
-                <![CDATA[]]>
-            </queryString>
-            <field name="nombreMedico" class="java.lang.String"/>
-            <field name="especialidad" class="java.lang.String"/>
-            <field name="cantidadTurnos" class="java.lang.Integer"/>
-        </subDataset>
-        <parameter name="TURNO_ID" class="java.lang.Integer">
-            <defaultValueExpression><![CDATA[$P{TURNO_ID}]]></defaultValueExpression>
-        </parameter>
-        <parameter name="FECHA_ACTUAL" class="java.lang.String"/>
-        <parameter name="HORA_ACTUAL" class="java.lang.String"/>
-        <parameter name="PACIENTE" class="java.lang.String"/>
-        <parameter name="ESPECIALIDAD" class="java.lang.String"/>
-        <parameter name="FECHA_TURNO" class="java.lang.String"/>
-        <parameter name="HORA_TURNO" class="java.lang.String"/>
-        <parameter name="MEDICO" class="java.lang.String"/>
-        <parameter name="TablaReportes" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource">
-            <defaultValueExpression><![CDATA[DATOS_REPORTE]]></defaultValueExpression>
-        </parameter>
         <parameter name="DATOS_REPORTE" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
         <queryString>
             <![CDATA[]]>
         </queryString>
-        <background>
-            <band splitType="Stretch"/>
-        </background>
-        <title>
-            <band height="139" splitType="Stretch">
-                <staticText>
-                    <reportElement x="150" y="10" width="290" height="40" uuid="a788016c-5e4f-4276-8ee9-208b69f199aa">
-                        <property name="com.jaspersoft.studio.unit.x" value="px"/>
-                        <property name="com.jaspersoft.studio.unit.y" value="px"/>
-                    </reportElement>
-                    <textElement>
-                        <font size="24"/>
-                    </textElement>
-                    <text><![CDATA[Reporte turnos por medico ]]></text>
-                </staticText>
-            </band>
-        </title>
-        <columnHeader>
-            <band height="288" splitType="Stretch">
-                <componentElement>
-                    <reportElement x="0" y="0" width="550" height="288" uuid="fdf3a8ea-457b-4195-b768-1d28d57e098c">
-                        <property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-                        <property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
-                        <property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
-                        <property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
-                    </reportElement>
-                    <jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-                        <datasetRun subDataset="DatasetReporteMedicos">
-                            <dataSourceExpression><![CDATA[$P{DATOS_REPORTE}]]></dataSourceExpression>
-                        </datasetRun>
-                        <jr:column width="100" uuid="d2110ab2-655e-4e9e-9220-addcb5b68f5b">
-                            <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-                            <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
-                                <staticText>
-                                    <reportElement x="0" y="0" width="100" height="30" uuid="064163e6-936e-48b6-94b7-42220266480f"/>
-                                    <textElement textAlignment="Center">
-                                        <font size="18" isBold="true" isItalic="false"/>
-                                    </textElement>
-                                    <text><![CDATA[Medico]]></text>
-                                </staticText>
-                            </jr:columnHeader>
-                            <jr:detailCell style="Table_TD" height="30">
-                                <textField>
-                                    <reportElement x="0" y="0" width="100" height="30" uuid="b5c2be58-f159-4e1a-a2dd-f804ab889bf5"/>
-                                    <textElement textAlignment="Center" verticalAlignment="Middle"/>
-                                    <textFieldExpression><![CDATA[$F{nombreMedico}]]></textFieldExpression>
-                                </textField>
-                            </jr:detailCell>
-                        </jr:column>
-                        <jr:column width="120" uuid="aba177d6-e2d9-4648-9bb7-5057f090f9fa">
-                            <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-                            <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
-                                <staticText>
-                                    <reportElement x="0" y="0" width="120" height="30" uuid="81c1d816-3a4d-4f93-890a-9f0425fe0fd1"/>
-                                    <textElement textAlignment="Center">
-                                        <font size="18" isBold="true"/>
-                                    </textElement>
-                                    <text><![CDATA[Especialidad]]></text>
-                                </staticText>
-                            </jr:columnHeader>
-                            <jr:detailCell style="Table_TD" height="30">
-                                <textField>
-                                    <reportElement x="0" y="0" width="120" height="30" uuid="ad6b29ca-48e2-438c-a488-d45c0bedf2c8"/>
-                                    <textElement textAlignment="Center" verticalAlignment="Middle"/>
-                                    <textFieldExpression><![CDATA[$F{especialidad}]]></textFieldExpression>
-                                </textField>
-                            </jr:detailCell>
-                        </jr:column>
-                        <jr:column width="100" uuid="2b69765d-328c-4077-9071-4338a6249141">
-                            <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-                            <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
-                                <staticText>
-                                    <reportElement x="0" y="0" width="100" height="30" uuid="b73794ce-357b-43c7-af5d-330baf496007"/>
-                                    <textElement textAlignment="Center">
-                                        <font size="18" isBold="true"/>
-                                    </textElement>
-                                    <text><![CDATA[Turno]]></text>
-                                </staticText>
-                            </jr:columnHeader>
-                            <jr:detailCell style="Table_TD" height="30">
-                                <textField>
-                                    <reportElement x="0" y="0" width="100" height="30" uuid="2cd3b081-b6d3-4c42-b169-ff762817cd96"/>
-                                    <textElement textAlignment="Center" verticalAlignment="Middle"/>
-                                    <textFieldExpression><![CDATA[$F{cantidadTurnos}]]></textFieldExpression>
-                                </textField>
-                            </jr:detailCell>
-                        </jr:column>
-                    </jr:table>
-                </componentElement>
-            </band>
-        </columnHeader>
-        <detail>
-            <band height="220" splitType="Stretch"/>
-        </detail>
-        <pageFooter>
-            <band height="54" splitType="Stretch"/>
-        </pageFooter>
-    </jasperReport>
-
+        <field name="nombreMedico" class="java.lang.String"/>
+        <field name="especialidad" class="java.lang.String"/>
+        <field name="cantidadTurnos" class="java.lang.Integer"/>
+    </subDataset>
+    <parameter name="TURNO_ID" class="java.lang.Integer">
+        <defaultValueExpression><![CDATA[$P{TURNO_ID}]]></defaultValueExpression>
+    </parameter>
+    <parameter name="FECHA_ACTUAL" class="java.lang.String"/>
+    <parameter name="HORA_ACTUAL" class="java.lang.String"/>
+    <parameter name="PACIENTE" class="java.lang.String"/>
+    <parameter name="ESPECIALIDAD" class="java.lang.String"/>
+    <parameter name="FECHA_TURNO" class="java.lang.String"/>
+    <parameter name="HORA_TURNO" class="java.lang.String"/>
+    <parameter name="MEDICO" class="java.lang.String"/>
+    <parameter name="TablaReportes" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource">
+        <defaultValueExpression><![CDATA[DATOS_REPORTE]]></defaultValueExpression>
+    </parameter>
+    <parameter name="DATOS_REPORTE" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+    <queryString>
+        <![CDATA[]]>
+    </queryString>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="139" splitType="Stretch">
+            <staticText>
+                <reportElement x="150" y="10" width="290" height="40" uuid="a788016c-5e4f-4276-8ee9-208b69f199aa">
+                    <property name="com.jaspersoft.studio.unit.x" value="px"/>
+                    <property name="com.jaspersoft.studio.unit.y" value="px"/>
+                </reportElement>
+                <textElement>
+                    <font size="24"/>
+                </textElement>
+                <text><![CDATA[Reporte turnos por medico ]]></text>
+            </staticText>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="288" splitType="Stretch">
+            <componentElement>
+                <reportElement x="0" y="0" width="550" height="288" uuid="fdf3a8ea-457b-4195-b768-1d28d57e098c">
+                    <property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+                    <property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+                    <property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+                    <property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+                </reportElement>
+                <jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+                    <datasetRun subDataset="DatasetReporteMedicos" uuid="23cf6ccf-51db-4ca5-8f4b-89e60f38c76e">
+                        <dataSourceExpression><![CDATA[$P{DATOS_REPORTE}]]></dataSourceExpression>
+                    </datasetRun>
+                    <jr:column width="100" uuid="d2110ab2-655e-4e9e-9220-addcb5b68f5b">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="100" height="30" uuid="064163e6-936e-48b6-94b7-42220266480f"/>
+                                <textElement textAlignment="Center">
+                                    <font size="18" isBold="true" isItalic="false"/>
+                                </textElement>
+                                <text><![CDATA[Medico]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField>
+                                <reportElement x="0" y="0" width="100" height="30" uuid="b5c2be58-f159-4e1a-a2dd-f804ab889bf5"/>
+                                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                                <textFieldExpression><![CDATA[$F{nombreMedico}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="120" uuid="aba177d6-e2d9-4648-9bb7-5057f090f9fa">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="120" height="30" uuid="81c1d816-3a4d-4f93-890a-9f0425fe0fd1"/>
+                                <textElement textAlignment="Center">
+                                    <font size="18" isBold="true"/>
+                                </textElement>
+                                <text><![CDATA[Especialidad]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField>
+                                <reportElement x="0" y="0" width="120" height="30" uuid="ad6b29ca-48e2-438c-a488-d45c0bedf2c8"/>
+                                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                                <textFieldExpression><![CDATA[$F{especialidad}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                    <jr:column width="100" uuid="2b69765d-328c-4077-9071-4338a6249141">
+                        <property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+                        <jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+                            <staticText>
+                                <reportElement x="0" y="0" width="100" height="30" uuid="b73794ce-357b-43c7-af5d-330baf496007"/>
+                                <textElement textAlignment="Center">
+                                    <font size="18" isBold="true"/>
+                                </textElement>
+                                <text><![CDATA[Turno]]></text>
+                            </staticText>
+                        </jr:columnHeader>
+                        <jr:detailCell style="Table_TD" height="30">
+                            <textField>
+                                <reportElement x="0" y="0" width="100" height="30" uuid="2cd3b081-b6d3-4c42-b169-ff762817cd96"/>
+                                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                                <textFieldExpression><![CDATA[$F{cantidadTurnos}]]></textFieldExpression>
+                            </textField>
+                        </jr:detailCell>
+                    </jr:column>
+                </jr:table>
+            </componentElement>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="220" splitType="Stretch"/>
+    </detail>
+    <pageFooter>
+        <band height="54" splitType="Stretch"/>
+    </pageFooter>
+</jasperReport>
