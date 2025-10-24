@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service;
 public interface ReportService {
     byte[] generarReporteTurno(Turno turno);
     byte[] generarReporteTurnosxMedico(String fechaInicio, String fechaFinal);
+    byte[] generarReporteMedicoXDia(String dia);
 }
 

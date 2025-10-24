@@ -49,4 +49,17 @@ public class AdminController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdf);
     }
+
+    @GetMapping("/reporteMedicoXDia")
+    public ResponseEntity<byte[]> generarReporteMedicosXDia(
+            @RequestParam("dia") String dia) {
+
+        byte[] pdf = reportService.generarReporteMedicoXDia(dia);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=reporte_medicos.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
+    }
+
 }

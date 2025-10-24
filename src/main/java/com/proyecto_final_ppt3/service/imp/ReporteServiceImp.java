@@ -1,9 +1,13 @@
 package com.proyecto_final_ppt3.service.imp;
 
+import com.proyecto_final_ppt3.Enum.DiasEnum;
+import com.proyecto_final_ppt3.Model.DTO.ReporteDiaDTO;
 import com.proyecto_final_ppt3.Model.DTO.ReporteMedicoDTO;
+import com.proyecto_final_ppt3.Model.Disponibilidad;
 import com.proyecto_final_ppt3.Model.Medico;
 import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Model.Turno;
+import com.proyecto_final_ppt3.Repository.DisponibilidadRepository;
 import com.proyecto_final_ppt3.Repository.MedicoRespository;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.Repository.TurnoRepository;
@@ -20,6 +24,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ReporteServiceImp implements ReportService {
@@ -32,6 +37,8 @@ public class ReporteServiceImp implements ReportService {
 
     @Autowired
     private TurnoRepository turnoRepository;
+    @Autowired
+    private DisponibilidadRepository disponibilidadRepository;
 
     @Override
     public byte[] generarReporteTurno(Turno turno) {
@@ -138,6 +145,48 @@ public class ReporteServiceImp implements ReportService {
 
         } catch(Exception e){
             throw new RuntimeException("No se encontro el paciente solicitado" + e);
+        }
+    }
+
+    @Override
+    public byte[] generarReporteMedicoXDia(String dia) {
+        try {
+            //Cargar el jrxml como InputStream desde resources
+            InputStream reportStream = new ClassPathResource("templates/report/ReporteDia.jrxml").getInputStream();
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
+
+            List<Disponibilidad> disponibilidades = disponibilidadRepository.findAll();
+
+            List<Disponibilidad> filtroDisponibilidades = disponibilidades.stream()
+                    .filter(p -> p.getDias() != null && Arrays.asList(p.getDias().split(",")).contains(dia))
+                    .toList();
+
+            // key seria la especialidad y el valor seria la lista de la disponibilidad
+            Map<String, List<Disponibilidad>> agrupadoPorEspecialidad = filtroDisponibilidades.stream()
+                    .collect(Collectors.groupingBy(Disponibilidad::getEspecialidad));
+
+
+            List<ReporteDiaDTO> reporte = agrupadoPorEspecialidad.entrySet().stream()
+                    .map(entry -> new ReporteDiaDTO(
+                            entry.getValue().stream()
+                                    .map(Disponibilidad::getMedico)
+                                    .map(Medico::getNombre).distinct()
+                                    .collect(Collectors.joining(", ")) , // lista de médicos
+                            entry.getKey()) // especialidad
+                    )
+                    .toList();
+
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reporte);
+
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("DATOS_REPORTE", dataSource);
+            parameters.put("diaParametro", DiasEnum.obtenerDiaEnteroPorDiaCortado(dia));
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            return JasperExportManager.exportReportToPdf(jasperPrint);
+
+        } catch(Exception e){
+            throw new RuntimeException("Error: " + e.getMessage());
         }
     }
 }
