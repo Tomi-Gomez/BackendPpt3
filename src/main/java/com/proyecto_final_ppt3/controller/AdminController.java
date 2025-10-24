@@ -10,19 +10,21 @@ import com.proyecto_final_ppt3.service.AdministrativoService;
 import com.proyecto_final_ppt3.service.ReportService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @RestController
 @RequestMapping("/")
 public class AdminController {
 
+    @Autowired
     private AdministrativoService administrativo;
 
+    @Autowired
     private ReportService reportService;
 
     @PostMapping("/insertarAdmin")
