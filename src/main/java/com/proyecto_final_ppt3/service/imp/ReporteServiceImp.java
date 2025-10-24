@@ -83,6 +83,7 @@ public class ReporteServiceImp implements ReportService {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
             SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat formatoBase = new SimpleDateFormat("yyyy-MM-dd");
 
             Date periodoInicialReporte = formato.parse(fechaInicio);
             Date periodoFinalReporte = formato.parse(fechaFinal);
@@ -92,7 +93,7 @@ public class ReporteServiceImp implements ReportService {
 
             for (Turno l : listaTotalTurno){
                 String f = l.getFecha();
-                Date fecha = formato.parse(f);
+                Date fecha = formatoBase.parse(f);
 
                 if (!fecha.before(periodoInicialReporte) && !fecha.after(periodoFinalReporte)) {
                     listaTurnoReporte.add(l);
