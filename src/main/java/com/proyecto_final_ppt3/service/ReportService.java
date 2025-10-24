@@ -9,5 +9,6 @@ public interface ReportService {
     byte[] generarReporteTurno(Turno turno);
     byte[] generarReporteTurnosxMedico(String fechaInicio, String fechaFinal);
     byte[] generarReporteMedicoXDia(String dia);
+    byte[] generarReporteTurnosXCancelado(String fechaInicio, String fechaFinal);
 }
 

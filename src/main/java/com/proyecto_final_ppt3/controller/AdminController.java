@@ -62,4 +62,17 @@ public class AdminController {
                 .body(pdf);
     }
 
+    @GetMapping("/reporteMedicoXCancelado")
+    public ResponseEntity<byte[]> generarReporteTurnosXCancelado(
+            @RequestParam("inicio") String fechaInicio,
+            @RequestParam("fin") String fechaFin) {
+
+        byte[] pdf = reportService.generarReporteTurnosXCancelado(fechaInicio, fechaFin);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=reporte_medicos.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
+    }
+
 }

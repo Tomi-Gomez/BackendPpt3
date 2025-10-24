@@ -33,7 +33,7 @@ public class Turno {
                 .fecha(turnoRequest.getFecha())
                 .hora(turnoRequest.getHora())
                 .observaciones(turnoRequest.getObservaciones())
-                .estado("PEDIENTE")
+                .estado("PENDIENTE")
                 .calificacion("PENDIENTE")
                 .especialidad(turnoRequest.getEspecialidad())
                 .build();

@@ -1,6 +1,7 @@
 package com.proyecto_final_ppt3.service.imp;
 
 import com.proyecto_final_ppt3.Enum.DiasEnum;
+import com.proyecto_final_ppt3.Model.DTO.ReporteCanceladoDTO;
 import com.proyecto_final_ppt3.Model.DTO.ReporteDiaDTO;
 import com.proyecto_final_ppt3.Model.DTO.ReporteMedicoDTO;
 import com.proyecto_final_ppt3.Model.Disponibilidad;
@@ -77,76 +78,56 @@ public class ReporteServiceImp implements ReportService {
 
     }
 
-
     @Override
     public byte[] generarReporteTurnosxMedico(String fechaInicio, String fechaFinal) {
         try {
-            //Cargar el jrxml como InputStream desde resources
-            InputStream reportStream = new ClassPathResource("templates/report/ReporteMedico.jrxml").getInputStream();
+            InputStream reportStream = new ClassPathResource("templates/report/ReporteTurnosPorMedico.jrxml").getInputStream();
             JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
 
-            //Traigo la fecha y hora Actual
             LocalDate fechaActual = LocalDate.now();
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 
-            Date periodoInicialReporte = formato.parse(fechaInicio);
-            Date periodoFinalReporte = formato.parse(fechaFinal);
+            // ✅ Consultar solo turnos del rango
+            List<Turno> listaTurnoReporte = turnoRepository.findTurnosByFechaBetween(fechaInicio, fechaFinal);
 
-            List<Turno> listaTotalTurno = turnoRepository.findAll();
-            List<Turno> listaTurnoReporte = new ArrayList<>();
+            // ✅ Traer todos los médicos en una sola consulta
+            Map<Integer, Medico> medicosMap = medicoRespository.findAll()
+                    .stream()
+                    .collect(Collectors.toMap(Medico::getId, m -> m));
 
-            for (Turno l : listaTotalTurno){
-                String f = l.getFecha();
-                Date fecha = formato.parse(f);
+            // ✅ Agrupar por médico usando stream
+            Map<Medico, Long> cantidadTurnoXMedico = listaTurnoReporte.parallelStream()
+                    .map(t -> medicosMap.get(t.getIdMedico()))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.groupingBy(m -> m, Collectors.counting()));
 
-                if (!fecha.before(periodoInicialReporte) && !fecha.after(periodoFinalReporte)) {
-                    listaTurnoReporte.add(l);
-                }
-            }
-
-            // Creo un map donde le asigno al medico la cantidad de turnos que tuvo en el periodo seleccionado
-            Map<Medico,Integer> cantidadTurnoXMedico = new HashMap<>();
-
-            for (Turno t : listaTurnoReporte){
-                Optional<Medico> m = medicoRespository.findById(t.getIdMedico());
-                Medico medico = null;
-
-                if (m.isPresent()){
-                    medico = m.get();
-                }
-                cantidadTurnoXMedico.put(medico,cantidadTurnoXMedico.getOrDefault(medico,0) + 1 );
-            }
-
-            // Creo una lista donde añado el map anterior y le agrego la espcialidad por ReporteMedicoDTO
-            List<ReporteMedicoDTO> reporte = new ArrayList<>();
-            for(Map.Entry<Medico,Integer> entry : cantidadTurnoXMedico.entrySet()){
-                Medico m = entry.getKey();
-                int cantidad = entry.getValue();
-
-                reporte.add(new ReporteMedicoDTO(
-                        m.getNombre(),
-                        m.getEspecialidad(),
-                        cantidad
-                ));
-            }
+            // ✅ Generar DTOs
+            List<ReporteMedicoDTO> reporte = cantidadTurnoXMedico.entrySet()
+                    .stream()
+                    .map(entry -> new ReporteMedicoDTO(
+                            entry.getKey().getNombre(),
+                            entry.getKey().getEspecialidad(),
+                            entry.getValue().intValue()
+                    ))
+                    .toList();
 
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reporte);
 
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("FECHA_ACTUAL", fechaActual.format(dateFormatter));
-            parameters.put("HORA_ACTUAL", LocalTime.now().format(timeFormatter));
+            parameters.put("HORA_ACTUAL", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
             parameters.put("DATOS_REPORTE", dataSource);
 
-
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
             return JasperExportManager.exportReportToPdf(jasperPrint);
 
-        } catch(Exception e){
-            throw new RuntimeException("No se encontro el paciente solicitado" + e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al generar reporte de turnos por médico: " + e.getMessage(), e);
         }
     }
+
+
 
     @Override
     public byte[] generarReporteMedicoXDia(String dia) {
@@ -179,14 +160,78 @@ public class ReporteServiceImp implements ReportService {
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reporte);
 
             Map<String, Object> parameters = new HashMap<>();
+             parameters.put("FECHA_ACTUAL", LocalDate.now().toString());
+            parameters.put("HORA_ACTUAL", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
             parameters.put("DATOS_REPORTE", dataSource);
-            parameters.put("diaParametro", DiasEnum.obtenerDiaEnteroPorDiaCortado(dia));
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
             return JasperExportManager.exportReportToPdf(jasperPrint);
 
         } catch(Exception e){
             throw new RuntimeException("Error: " + e.getMessage());
         }
     }
+
+  @Override
+public byte[] generarReporteTurnosXCancelado(String fechaInicio, String fechaFinal) {
+    try {
+        InputStream reportStream = new ClassPathResource("templates/report/ReporteTurnosCancelados.jrxml").getInputStream();
+        JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
+
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        Date periodoInicial = formato.parse(fechaInicio);
+        Date periodoFinal = formato.parse(fechaFinal);
+
+        // 🔍 Paso 1: filtrar turnos cancelados en rango
+        List<Turno> turnosCancelados = turnoRepository.findAll().stream()
+                .filter(t -> {
+                    try {
+                        Date fechaTurno = formato.parse(t.getFecha());
+                        return !fechaTurno.before(periodoInicial)
+                                && !fechaTurno.after(periodoFinal)
+                                && "cancelado".equalsIgnoreCase(t.getEstado());
+                    } catch (Exception e) {
+                        return false;
+                    }
+                })
+                .collect(Collectors.toList());
+
+        // 🔹 Paso 2: convertirlos a DTOs
+        List<ReporteCanceladoDTO> reporte = new ArrayList<>();
+
+        for (Turno t : turnosCancelados) {
+            String nombreMedico = medicoRespository.findById(t.getIdMedico())
+                    .map(m -> m.getNombre() + " " + m.getApellido())
+                    .orElse("Desconocido");
+
+            String nombrePaciente = pacienteRepository.findById(t.getIdPaciente())
+                    .map(p -> p.getNombre() + " " + p.getApellido())
+                    .orElse("Desconocido");
+
+            reporte.add(new ReporteCanceladoDTO(
+                    t.getFecha(),
+                    t.getHora(),
+                    nombreMedico,
+                    nombrePaciente
+            ));
+        }
+
+        // 🔹 Paso 3: generar PDF
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reporte);
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("FECHA_ACTUAL", LocalDate.now().toString());
+        parameters.put("HORA_ACTUAL", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        parameters.put("DATOS_REPORTE", dataSource);
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+
+    } catch (Exception e) {
+        throw new RuntimeException("Error al generar reporte de turnos cancelados: " + e.getMessage(), e);
+    }
+}
+
+
+
 }
