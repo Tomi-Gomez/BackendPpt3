@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @AllArgsConstructor
 @RestController
@@ -54,4 +57,10 @@ public class TurnoController {
     public List<TurnoResponse> historialTurnosMed(@PathVariable("id_medico") Integer idMedico) {
         return turnoService.historialTurnosMed(idMedico);
     }
+
+    @GetMapping("/turnos/{fecha}")
+    public List<TurnoResponse> getTurnosFecha(@PathVariable("fecha") String fecha) {
+        return turnoService.getTurnosFecha(fecha);
+    }
+    
 }

@@ -22,4 +22,6 @@ public interface TurnoService {
     List<TurnoDetalleResponse> getTurnosTomadosCSV(Integer dniMedico);
 
     List<TurnoResponse> historialTurnosMed(Integer idMedico);
+
+    List<TurnoResponse> getTurnosFecha(String fecha);
 }

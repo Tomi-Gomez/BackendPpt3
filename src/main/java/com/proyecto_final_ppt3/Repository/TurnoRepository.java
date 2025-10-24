@@ -38,4 +38,6 @@ public interface TurnoRepository extends JpaRepository<Turno, Integer> {
     List<Turno> findByIdMedicoAndFecha(Integer idMedico, String fecha);
 
     List<Turno> findByIdMedico(Integer idMedico);
+
+    List<Turno> findByFecha(String fecha);
 }
