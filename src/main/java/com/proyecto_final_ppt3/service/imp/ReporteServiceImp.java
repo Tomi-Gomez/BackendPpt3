@@ -82,7 +82,7 @@ public class ReporteServiceImp implements ReportService {
             LocalDate fechaActual = LocalDate.now();
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
 
             Date periodoInicialReporte = formato.parse(fechaInicio);
             Date periodoFinalReporte = formato.parse(fechaFinal);
