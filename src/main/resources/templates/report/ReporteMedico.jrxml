@@ -51,7 +51,7 @@
     <parameter name="HORA_TURNO" class="java.lang.String"/>
     <parameter name="MEDICO" class="java.lang.String"/>
     <parameter name="TablaReportes" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource">
-        <defaultValueExpression><![CDATA[DATOS_REPORTE]]></defaultValueExpression>
+        <defaultValueExpression><![CDATA[$P{DATOS_REPORTE}]]></defaultValueExpression>
     </parameter>
     <parameter name="DATOS_REPORTE" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
     <queryString>
