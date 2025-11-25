@@ -1,8 +1,11 @@
 package com.proyecto_final_ppt3.service.imp;
 
+import com.proyecto_final_ppt3.Enum.DiasEnum;
 import com.proyecto_final_ppt3.Model.Administrativo;
+import com.proyecto_final_ppt3.Model.Disponibilidad;
 import com.proyecto_final_ppt3.Model.Medico;
 import com.proyecto_final_ppt3.Repository.AdministrativoRepository;
+import com.proyecto_final_ppt3.Repository.DisponibilidadRepository;
 import com.proyecto_final_ppt3.Repository.MedicoRespository;
 import com.proyecto_final_ppt3.controller.request.AdministrativoRequest;
 import com.proyecto_final_ppt3.controller.request.MedicoRequest;
@@ -27,6 +30,8 @@ public class AdministrativoServiceImp implements AdministrativoService {
 
     private AdministrativoRepository repository;
 
+    private DisponibilidadRepository disponibilidadRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     //Cheuqear si esto esta bien, porque deberia poder
@@ -49,14 +54,25 @@ public class AdministrativoServiceImp implements AdministrativoService {
             medicoRequest.setContra(passwordEncoder.encode(medicoRequest.getContra()));
             medicoRequest.setHabilitacion(false);
             Medico medico = Medico.fromUsuarioRequest(medicoRequest);
-            medicoRespository.save(medico);
+
+            Medico medicoSaved = medicoRespository.save(medico);
+
+            Disponibilidad disponibilidad = new Disponibilidad();
+            disponibilidad.setDias(DiasEnum.diasDefault());
+            disponibilidad.setDesde("09:00");
+            disponibilidad.setHasta("18:00");
+            disponibilidad.setMedico(medicoSaved);
+            disponibilidad.setEspecialidad(medicoSaved.getEspecialidad());
+
+            disponibilidadRepository.save(disponibilidad);
+
             return MedicoResponse.fromMedico(medico);
         }catch (Exception e){
-            throw new MedicosNotFoundException("Error al insertar el medico" + e);
+            throw new MedicosNotFoundException("Error al insertar el medico" + e.getMessage());
         }
     }
 
-     @PostConstruct
+    @PostConstruct
     public void initDefaultAdmin() {
         if (repository.count() == 0) {
             Administrativo admin = new Administrativo();

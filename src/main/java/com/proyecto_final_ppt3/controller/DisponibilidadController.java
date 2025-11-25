@@ -32,8 +32,12 @@ public class DisponibilidadController {
 
     @GetMapping("/disponibilidad/{idMedico}")
     public ResponseEntity<DisponibilidadResponse> getDisponibilidadPorMedico(@PathVariable Integer idMedico) {
-        return disponibilidadService.buscarPorMedicoId(idMedico)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        List<DisponibilidadResponse> disponibilidades = disponibilidadService.buscarPorMedicoId(idMedico);
+
+        if (disponibilidades.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(disponibilidades.get(0));
     }
 }

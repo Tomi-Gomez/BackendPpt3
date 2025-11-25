@@ -27,4 +27,12 @@ public enum DiasEnum {
         }
         return null;
     }
+
+    public static String diasDefault() {
+        return DiasEnum.LUNES.getDiaCortado() + "," +
+                DiasEnum.MARTES.getDiaCortado() + "," +
+                DiasEnum.MIERCOLES.getDiaCortado() + "," +
+                DiasEnum.JUEVES.getDiaCortado() + "," +
+                DiasEnum.VIERNES.getDiaCortado();
+    }
 }

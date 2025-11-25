@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DisponibilidadServiceImp implements DisponibilidadService {
@@ -42,8 +41,7 @@ public class DisponibilidadServiceImp implements DisponibilidadService {
     }
     
     @Override
-    public Optional<DisponibilidadResponse> buscarPorMedicoId(Integer idMedico) {
-    return disponibilidadRepository.findByMedico_Id(idMedico) 
-            .map(DisponibilidadResponse::fromDisponibilidad);
-}
+    public List<DisponibilidadResponse> buscarPorMedicoId(Integer idMedico) {
+        return disponibilidadRepository.findByMedicoId(idMedico).stream().map(DisponibilidadResponse::fromDisponibilidad).toList();
+    }
 }
