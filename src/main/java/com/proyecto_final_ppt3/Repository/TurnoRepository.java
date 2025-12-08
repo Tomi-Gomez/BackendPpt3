@@ -43,4 +43,6 @@ public interface TurnoRepository extends JpaRepository<Turno, Integer> {
 
     @Query("SELECT t FROM Turno t WHERE t.fecha BETWEEN :inicio AND :fin")
     List<Turno> findTurnosByFechaBetween(@Param("inicio") String fechaInicio, @Param("fin") String fechaFin);
+
+    List<Turno> findByIdPacienteAndEstadoNot(Integer idPaciente, String estado);
 }

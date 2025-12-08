@@ -95,9 +95,9 @@ public class TurnoServiceImpl implements TurnoService {
         List<Turno> turnos;
 
         if (opcion == 1) {
-            turnos = turnoRepository.findByIdPaciente(idPaciente);
+            turnos = turnoRepository.findByIdPacienteAndEstado(idPaciente, "CONFIRMADO");
         } else {
-            turnos = turnoRepository.findByIdPacienteAndEstado(idPaciente, "confirmado");
+            turnos = turnoRepository.findByIdPacienteAndEstadoNot(idPaciente, "CONFIRMADO");
         }
 
         return turnos.stream().map(TurnoResponse::fromTurno).toList();
