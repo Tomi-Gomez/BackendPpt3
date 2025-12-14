@@ -39,7 +39,6 @@ public class AdministrativoServiceImp implements AdministrativoService {
     public Administrativo insertarAdmin(AdministrativoRequest administrativoRequest) {
         try {
             administrativoRequest.setContrasenia(passwordEncoder.encode(administrativoRequest.getContrasenia()));
-            
             Administrativo admin = AdministrativoRequest.administrativo(administrativoRequest);
             return repository.save(admin);
 

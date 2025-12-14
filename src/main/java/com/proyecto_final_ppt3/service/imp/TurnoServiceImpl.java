@@ -71,7 +71,6 @@ public class TurnoServiceImpl implements TurnoService {
     @Override
     public TurnoResponse updateTurno(Integer idTurno, String option) {
         Turno turno = turnoRepository.findById(idTurno).get();
-
         //aca se hace con el dto pero como no hay tiempo hay que hacer la vista gorda
         turno.setEstado(option);
         turnoRepository.save(turno);
@@ -82,7 +81,6 @@ public class TurnoServiceImpl implements TurnoService {
     @Override
     public TurnoResponse updateObservaciones(Integer idTurno, TurnoRequest turnoRequest) {
         Turno turno = turnoRepository.findById(idTurno).get();
-
         //aca se hace con el dto pero como no hay tiempo hay que hacer la vista gorda
         turno.setObservaciones(turnoRequest.getObservaciones());
         turnoRepository.save(turno);
@@ -93,13 +91,11 @@ public class TurnoServiceImpl implements TurnoService {
     @Override
     public List<TurnoResponse> historialTurnos(Integer idPaciente, Integer opcion) {
         List<Turno> turnos;
-
         if (opcion == 1) {
             turnos = turnoRepository.findByIdPacienteAndEstado(idPaciente, "CONFIRMADO");
         } else {
             turnos = turnoRepository.findByIdPacienteAndEstadoNot(idPaciente, "CONFIRMADO");
         }
-
         return turnos.stream().map(TurnoResponse::fromTurno).toList();
     }
 
@@ -130,8 +126,8 @@ public class TurnoServiceImpl implements TurnoService {
         for (Turno t : turnos) {
             Medico medico = medicoRepository.findById(t.getIdMedico()).orElse(null);
             Paciente paciente = pacienteRepository.findById(t.getIdPaciente()).orElse(null);
-
             TurnoResponse resp = new TurnoResponse();
+
             resp.setIdTurno(t.getId()); 
             resp.setFecha(t.getFecha());
             resp.setHora(t.getHora());
@@ -139,20 +135,16 @@ public class TurnoServiceImpl implements TurnoService {
             resp.setEspecialidad(t.getEspecialidad());
             resp.setCalificacion(t.getCalificacion());
             resp.setObservaciones(t.getObservaciones());
-
             if (medico != null) {
                 resp.setNombreMedico(medico.getNombre());
                 resp.setApellidoMedico(medico.getApellido());
             }
-
             if (paciente != null) {
                 resp.setNombrePaciente(paciente.getNombre());
                 resp.setApellidoPaciente(paciente.getApellido());
             }
-
             responses.add(resp);
         }
-        
         return responses;
     }
 

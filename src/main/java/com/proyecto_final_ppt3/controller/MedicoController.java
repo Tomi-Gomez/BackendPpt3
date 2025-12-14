@@ -1,13 +1,10 @@
 package com.proyecto_final_ppt3.controller;
 
-import com.proyecto_final_ppt3.Model.Medico;
 import com.proyecto_final_ppt3.controller.request.MedicoRequest;
-import com.proyecto_final_ppt3.controller.response.DisponibilidadResponse;
 import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import com.proyecto_final_ppt3.service.MedicoService;
-import com.proyecto_final_ppt3.service.imp.MedicoServiceImp;
+import com.proyecto_final_ppt3.service.TecnicoService;
 import lombok.AllArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +16,7 @@ import java.util.List;
 public class MedicoController {
 
     private MedicoService aplicacion;
+	private TecnicoService tecnicoService;
 
     @GetMapping("/medicos")
     public ResponseEntity<List<MedicoResponse>> getMedicos() {
@@ -36,9 +34,21 @@ public class MedicoController {
         return ResponseEntity.ok(aplicacion.updatedMedico(medicoRequest));
     }
 
-     @PutMapping("/medicoHabilitacion/{id}")
+    @PutMapping("/medicoHabilitacion/{id}")
     public ResponseEntity<MedicoResponse> updateMedicoHabilitacion(@PathVariable Integer id,@RequestBody MedicoRequest medicoRequest) {
         medicoRequest.setId(id);
         return ResponseEntity.ok(aplicacion.updateMedicoHabilitacion(medicoRequest));
     }
+
+	@GetMapping("/tecnicos")
+	public ResponseEntity<List<MedicoResponse>> getTecnicos() {
+		return ResponseEntity.ok(tecnicoService.getTecnicos());
+	}
+
+	@GetMapping("/tecnicoById")
+	public ResponseEntity<MedicoResponse> tecnicoById(@RequestParam("id_medico") Integer idTecnico) {
+		return ResponseEntity.ok(tecnicoService.getTecnicoById(idTecnico));
+	}
+
+
 }
