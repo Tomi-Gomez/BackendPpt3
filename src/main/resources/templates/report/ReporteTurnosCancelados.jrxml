@@ -109,13 +109,13 @@
 
             <textField>
                 <reportElement x="170" y="0" width="180" height="20"/>
-                <textElement textAlignment="Left"/>
+                <textElement textAlignment="Center"/>
                 <textFieldExpression><![CDATA[$F{medico}]]></textFieldExpression>
             </textField>
 
             <textField>
                 <reportElement x="350" y="0" width="205" height="20"/>
-                <textElement textAlignment="Left"/>
+                <textElement textAlignment="Center"/>
                 <textFieldExpression><![CDATA[$F{paciente}]]></textFieldExpression>
             </textField>
         </band>
