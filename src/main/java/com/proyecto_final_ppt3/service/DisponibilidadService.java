@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface DisponibilidadService {
     List<DisponibilidadResponse> buscarPorEspecialidad(String specialty);
-
     DisponibilidadResponse postGuardarDisponibilidad(DisponibilidadRequest disponibilidad);
-
     List<DisponibilidadResponse> buscarPorMedicoId(Integer id_medico);
 }

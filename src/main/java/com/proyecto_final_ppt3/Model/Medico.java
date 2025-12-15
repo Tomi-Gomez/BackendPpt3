@@ -46,6 +46,7 @@ public class Medico {
                 .contrasenia(medicoRequest.getContra())
                 .especialidad(medicoRequest.getEspecialidad())
                 .matricula(medicoRequest.getMatricula())
+                .tipoUsuario(medicoRequest.getTipoUsuario())
                 .habilitacion(medicoRequest.getHabilitacion())
                 .avatar(medicoRequest.getAvatar()) 
                 .build();

@@ -39,13 +39,11 @@ public class TurnoServiceImpl implements TurnoService {
     public TurnoResponse guardarTurno(TurnoRequest turnoRequest) {
         try {
             Turno turno = Turno.FromTurnoRequest(turnoRequest);
-
             log.info("Buscando paciente con idPaciente={}", turno.getIdPaciente());
 
             Turno finalTurno = turno;
             Paciente paciente = pacienteRepository.findById(turno.getIdPaciente())
                     .orElseThrow(() -> new RuntimeException("Paciente no encontrado con id " + finalTurno.getIdPaciente()));
-
             log.info("TurnoRequest recibido: {}", turnoRequest);
             log.info("Turno a guardar: {}", turno);
 

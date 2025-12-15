@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface TecnicoService {
    List<MedicoResponse> getTecnicos();
-
    MedicoResponse getTecnicoById(Integer idTecnico);
 }

@@ -43,5 +43,4 @@ public class TecnicoServiceImp implements TecnicoService {
 			throw new TecnicoNotFoundException(idTecnico);
 		}
 	}
-
 }

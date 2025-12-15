@@ -9,8 +9,6 @@ import com.proyecto_final_ppt3.controller.request.MedicoRequest;
 import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 
 public interface AdministrativoService {
-
     Administrativo insertarAdmin(AdministrativoRequest administrativoRequest);
-
     MedicoResponse insertarMedico(MedicoRequest medico);
 }

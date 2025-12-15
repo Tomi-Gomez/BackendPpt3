@@ -20,4 +20,5 @@ public class MedicoRequest {
     private String matricula;
     private Boolean habilitacion;
     private String avatar;
+    private String tipoUsuario;
 }

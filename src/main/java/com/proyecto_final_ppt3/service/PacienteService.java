@@ -12,9 +12,6 @@ import java.util.Optional;
 public interface PacienteService {
     RegistroResponse registrar(UsuarioRequest usuarioRequest);
     PacienteResponse updatedPaciente(UsuarioRequest usuarioRequest);
-
-
     List<PacienteResponse> pacienteById (Integer idPaciente);
-
     PacienteResponse buscarPorDni(Integer dni);
 }
