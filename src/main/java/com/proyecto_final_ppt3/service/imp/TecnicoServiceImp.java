@@ -24,7 +24,7 @@ public class TecnicoServiceImp implements TecnicoService {
 		try {
 			List<Medico> listTecnicos = medicoRespository.findAll()
 					                            .stream()
-					                            .filter(t->"Tecnico".equalsIgnoreCase(t.getEspecialidad()))
+					                            .filter(t->"Tecnico".equalsIgnoreCase(t.getTipoUsuario()))
 					                            .toList();
 			return listTecnicos.stream().map(MedicoResponse::fromMedico).toList();
 		} catch (TecnicosNotFoundException e) {

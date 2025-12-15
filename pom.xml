@@ -56,7 +56,6 @@
 			<version>1.18.32</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -132,5 +131,4 @@
 			</resource>
 		</resources>
 	</build>
-
 </project>
