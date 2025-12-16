@@ -111,7 +111,8 @@ public class ReporteServiceImp implements ReportService {
             List<ReporteMedicoDTO> reporte = cantidadTurnoXMedico.entrySet()
                     .stream()
                     .map(entry -> new ReporteMedicoDTO(
-                            entry.getKey().getNombre(),
+                            entry.getKey().getNombre() + " " + entry.getKey().getApellido(),
+                            capitalizar(entry.getKey().getTipoUsuario()),
                             entry.getKey().getEspecialidad(),
                             entry.getValue().intValue()
                     ))
@@ -133,7 +134,12 @@ public class ReporteServiceImp implements ReportService {
         }
     }
 
-
+    private String capitalizar(String texto) {
+        if (texto == null || texto.isEmpty()) {
+            return texto;
+        }
+        return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
+    }
 
     @Override
     public byte[] generarReporteMedicoXDia(String dia) {

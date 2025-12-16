@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ReporteMedicoDTO {
 	private String nombreMedico;
+	private String tipoUsuario;
 	private String especialidad;
 	private int cantidadTurnos;
 
