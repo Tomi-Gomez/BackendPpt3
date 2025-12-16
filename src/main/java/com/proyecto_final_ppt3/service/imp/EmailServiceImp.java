@@ -23,7 +23,7 @@ public class EmailServiceImp implements EmailService {
         String resetLink = "http://localhost:4200/reset-password?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("clinicabeltranavellaneda@outlook.com.ar"); 
+        message.setFrom("notificaciones.uom.clinica@gmail.com");
         message.setTo(to);
         message.setSubject("Recuperación de contraseña");
         message.setText("Haz click en este link para restablecer tu contraseña: " + resetLink);
@@ -36,7 +36,7 @@ public class EmailServiceImp implements EmailService {
         MimeMessage mensaje = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mensaje, true);
 
-        helper.setFrom("clinicabeltranavellaneda@outlook.com.ar");
+        helper.setFrom("notificaciones.uom.clinica@gmail.com");
         helper.setTo(to);
         helper.setSubject("Confirmación de Turno Médico");
         helper.setText("Adjunto encontrarás el comprobante de tu turno.");
