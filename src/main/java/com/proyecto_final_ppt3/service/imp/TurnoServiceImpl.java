@@ -90,9 +90,9 @@ public class TurnoServiceImpl implements TurnoService {
     public List<TurnoResponse> historialTurnos(Integer idPaciente, Integer opcion) {
         List<Turno> turnos;
         if (opcion == 1) {
-            turnos = turnoRepository.findByIdPacienteAndEstado(idPaciente, "CONFIRMADO");
+            turnos = turnoRepository.findByIdPacienteAndEstado(idPaciente, "FINALIZADO");
         } else {
-            turnos = turnoRepository.findByIdPacienteAndEstadoNot(idPaciente, "CONFIRMADO");
+            turnos = turnoRepository.findByIdPacienteAndEstadoNot(idPaciente, "FINALIZADO");
         }
         return turnos.stream().map(TurnoResponse::fromTurno).toList();
     }
