@@ -63,6 +63,7 @@ public class ReporteServiceImp implements ReportService {
             parameters.put("FECHA_ACTUAL", fechaActual.format(dateFormatter));
             parameters.put("HORA_ACTUAL", LocalTime.now().format(timeFormatter));
             parameters.put("PACIENTE", paciente.get().getNombre() + " " + paciente.get().getApellido());
+            parameters.put("PROFESIONAL",medico.get().getTipoUsuario());
             parameters.put("ESPECIALIDAD", turno.getEspecialidad());
             parameters.put("FECHA_TURNO", turno.getFecha());
             parameters.put("HORA_TURNO", turno.getHora());
@@ -236,45 +237,6 @@ public class ReporteServiceImp implements ReportService {
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException("Error al generar reporte de turnos cancelados: " + e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public byte[] generarReporteTurnoTecnico(Turno turno) {
-        try {
-            Optional<Paciente> paciente = pacienteRepository.findById(turno.getIdPaciente());
-            Optional<Medico> medico = medicoRespository.findById(turno.getIdMedico());
-
-            // cargar el jrxml como InputStream desde resources
-            InputStream reportStream = new ClassPathResource("templates/report/ReportTurno.jrxml").getInputStream();
-            JasperReport report = JasperCompileManager.compileReport(reportStream);
-
-            LocalDate fechaActual = LocalDate.now();
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
-            Map<String, Object> parameters = new HashMap<>();
-            parameters.put("TURNO_ID", turno.getId());
-            parameters.put("FECHA_ACTUAL", fechaActual.format(dateFormatter));
-            parameters.put("HORA_ACTUAL", LocalTime.now().format(timeFormatter));
-            parameters.put("PACIENTE", paciente.get().getNombre() + " " + paciente.get().getApellido());
-            parameters.put("ESPECIALIDAD", turno.getEspecialidad());
-            parameters.put("FECHA_TURNO", turno.getFecha());
-            parameters.put("HORA_TURNO", turno.getHora());
-            parameters.put("MEDICO", medico.get().getNombre() + " " + medico.get().getApellido());
-            parameters.put("imageDir", "classpath:/static/images/");
-
-            JasperPrint print = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
-
-            // exportar a bytes en lugar de archivo
-            return JasperExportManager.exportReportToPdf(print);
-
-        } catch (PacienteNotFoundException e) {
-            log.error(e.getMessage());
-            throw new PacienteNotFoundException("No se encontro el paciente solicitado" + e);
-        } catch (IOException | JRException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
         }
     }
 }

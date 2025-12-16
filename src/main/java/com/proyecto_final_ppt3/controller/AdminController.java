@@ -2,14 +2,10 @@ package com.proyecto_final_ppt3.controller;
 
 import com.proyecto_final_ppt3.Model.Administrativo;
 import com.proyecto_final_ppt3.controller.request.AdministrativoRequest;
-import com.proyecto_final_ppt3.controller.request.DisponibilidadRequest;
 import com.proyecto_final_ppt3.controller.request.MedicoRequest;
-import com.proyecto_final_ppt3.controller.request.UsuarioRequest;
 import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import com.proyecto_final_ppt3.service.AdministrativoService;
 import com.proyecto_final_ppt3.service.ReportService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -74,5 +70,4 @@ public class AdminController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdf);
     }
-
 }

@@ -49,7 +49,7 @@ public class TurnoServiceImpl implements TurnoService {
 
             // 1. Guardar turno en DB (ya con id asignado)
             turno = turnoRepository.save(turno);
-
+            
             // 2. Generar PDF
             byte[] pdfBytes = reporteServiceImp.generarReporteTurno(turno);
 

@@ -20,6 +20,7 @@
     <!-- CAMPOS -->
     <!-- =================== -->
     <field name="nombreMedico" class="java.lang.String"/>
+    <field name="tipoUsuario" class="java.lang.String"/>
     <field name="especialidad" class="java.lang.String"/>
     <field name="cantidadTurnos" class="java.lang.Integer"/>
 
@@ -68,6 +69,14 @@
                 <textElement textAlignment="Center">
                     <font isBold="true"/>
                 </textElement>
+                <text><![CDATA[Profesional]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="200" y="5" width="200" height="15"/>
+                <textElement textAlignment="Center">
+                    <font isBold="true"/>
+                </textElement>
                 <text><![CDATA[Especialidad]]></text>
             </staticText>
 
@@ -90,6 +99,12 @@
                 <reportElement x="90" y="0" width="200" height="20"/>
                 <textElement textAlignment="Left"/>
                 <textFieldExpression><![CDATA[$F{nombreMedico}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="200" y="0" width="200" height="20"/>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{tipoUsuario}]]></textFieldExpression>
             </textField>
 
             <textField>
