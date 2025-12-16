@@ -105,7 +105,7 @@
         </band>
     </columnHeader>
     <detail>
-        <band height="210" splitType="Stretch">
+        <band height="245" splitType="Stretch">
             <staticText>
                 <reportElement x="71" y="15" width="100" height="30" uuid="8fd46530-41c7-4d8a-a8ec-2a98d0d57c70"/>
                 <textElement>
@@ -114,7 +114,8 @@
                 <text><![CDATA[Paciente:]]></text>
             </staticText>
             <staticText>
-                <reportElement x="71" y="15" width="100" height="30" uuid="8fd46530-41c7-4d8a-a8ec-2a98d0d57c70"/>
+                <reportElement x="71" y="200" width="100" height="30"
+                               uuid="2a9c1a47-5c51-4d0a-9b9c-91c3b8f2b0a1"/>
                 <textElement>
                     <font size="14"/>
                 </textElement>
@@ -156,7 +157,8 @@
                 <textFieldExpression><![CDATA[$P{PACIENTE}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="181" y="15" width="330" height="30" uuid="9f72dbb4-0173-43ce-a751-410ab8a9ff0a"/>
+                <reportElement x="181" y="200" width="330" height="30"
+                               uuid="7e8c9a33-9c0f-4c51-9f92-1a0f6d5e8b44"/>
                 <textElement>
                     <font size="14"/>
                 </textElement>
@@ -191,7 +193,7 @@
                 <textFieldExpression><![CDATA[$P{MEDICO}]]></textFieldExpression>
             </textField>
             <rectangle>
-                <reportElement mode="Transparent" x="41" y="5" width="480" height="200" uuid="15049978-a2f6-408a-88a7-fbc101f6643b"/>
+                <reportElement mode="Transparent" x="41" y="5" width="480" height="235"/>
                 <graphicElement>
                     <pen lineWidth="0.5" lineColor="#8F8F8F"/>
                 </graphicElement>
