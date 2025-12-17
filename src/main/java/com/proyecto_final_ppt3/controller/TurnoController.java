@@ -1,6 +1,7 @@
 package com.proyecto_final_ppt3.controller;
 
 
+import com.proyecto_final_ppt3.controller.request.CalificacionRequest;
 import com.proyecto_final_ppt3.controller.request.TurnoRequest;
 import com.proyecto_final_ppt3.controller.response.TurnoDetalleResponse;
 import com.proyecto_final_ppt3.controller.response.TurnoResponse;
@@ -61,6 +62,16 @@ public class TurnoController {
     @GetMapping("/turnos/{fecha}")
     public List<TurnoResponse> getTurnosFecha(@PathVariable("fecha") String fecha) {
         return turnoService.getTurnosFecha(fecha);
+    }
+
+    @GetMapping("/cancelarTurno/{id}")
+    public void getTurnosFecha(@PathVariable("id") Integer id) {
+        turnoService.cancelarTurno(id);
+    }
+
+    @PostMapping("/enviarCalificacion")
+    public void enviarCalificacion(@RequestBody CalificacionRequest calificacionRequest) {
+        turnoService.enviarCalificacion(calificacionRequest);
     }
     
 }

@@ -5,6 +5,7 @@ import com.proyecto_final_ppt3.Model.Paciente;
 import com.proyecto_final_ppt3.Model.Turno;
 import com.proyecto_final_ppt3.Repository.PacienteRepository;
 import com.proyecto_final_ppt3.Repository.TurnoRepository;
+import com.proyecto_final_ppt3.controller.request.CalificacionRequest;
 import com.proyecto_final_ppt3.controller.request.TurnoRequest;
 import com.proyecto_final_ppt3.controller.response.TurnoDetalleResponse;
 import com.proyecto_final_ppt3.controller.response.TurnoResponse;
@@ -18,7 +19,6 @@ import com.proyecto_final_ppt3.Repository.MedicoRespository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -90,9 +90,9 @@ public class TurnoServiceImpl implements TurnoService {
     public List<TurnoResponse> historialTurnos(Integer idPaciente, Integer opcion) {
         List<Turno> turnos;
         if (opcion == 1) {
-            turnos = turnoRepository.findByIdPacienteAndEstado(idPaciente, "FINALIZADO");
+            turnos = turnoRepository.findByIdPacienteAndEstadoIn(idPaciente, List.of("CANCELADO", "FINALIZADO"));
         } else {
-            turnos = turnoRepository.findByIdPacienteAndEstadoNot(idPaciente, "FINALIZADO");
+            turnos = turnoRepository.findByIdPacienteAndEstadoNotIn(idPaciente, List.of("CANCELADO", "FINALIZADO"));
         }
         return turnos.stream().map(TurnoResponse::fromTurno).toList();
     }
@@ -144,6 +144,23 @@ public class TurnoServiceImpl implements TurnoService {
             responses.add(resp);
         }
         return responses;
+    }
+
+    @Override
+    public void cancelarTurno(Integer id) {
+        Turno turno = turnoRepository.findById(id).get();
+        turno.setEstado("CANCELADO");
+        turno.setCalificacion("");
+
+        turnoRepository.save(turno);
+    }
+
+    @Override
+    public void enviarCalificacion(CalificacionRequest calificacionRequest) {
+        Turno turno = turnoRepository.findById(calificacionRequest.getId()).get();
+        turno.setCalificacion(calificacionRequest.getCalificacion() + "/10");
+
+        turnoRepository.save(turno);
     }
 
 }

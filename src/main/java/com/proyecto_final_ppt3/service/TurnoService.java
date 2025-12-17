@@ -1,6 +1,6 @@
 package com.proyecto_final_ppt3.service;
 
-import com.proyecto_final_ppt3.Model.Turno;
+import com.proyecto_final_ppt3.controller.request.CalificacionRequest;
 import com.proyecto_final_ppt3.controller.request.TurnoRequest;
 import com.proyecto_final_ppt3.controller.response.TurnoDetalleResponse;
 import com.proyecto_final_ppt3.controller.response.TurnoResponse;
@@ -16,4 +16,6 @@ public interface TurnoService {
     List<TurnoDetalleResponse> getTurnosTomadosCSV(Integer dniMedico);
     List<TurnoResponse> historialTurnosMed(Integer idMedico);
     List<TurnoResponse> getTurnosFecha(String fecha);
+    void cancelarTurno(Integer id);
+    void enviarCalificacion(CalificacionRequest calificacionRequest);
 }

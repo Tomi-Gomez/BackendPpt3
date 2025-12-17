@@ -17,7 +17,7 @@ public interface TurnoRepository extends JpaRepository<Turno, Integer> {
 
     List<Turno> findByIdPaciente(Integer idPaciente);
 
-    List<Turno> findByIdPacienteAndEstado(Integer idPaciente, String estado);
+    List<Turno> findByIdPacienteAndEstadoIn(Integer idPaciente, List<String> estados);
 
     @Query(value = """
         SELECT T.id AS id,
@@ -44,5 +44,5 @@ public interface TurnoRepository extends JpaRepository<Turno, Integer> {
     @Query("SELECT t FROM Turno t WHERE t.fecha BETWEEN :inicio AND :fin")
     List<Turno> findTurnosByFechaBetween(@Param("inicio") String fechaInicio, @Param("fin") String fechaFin);
 
-    List<Turno> findByIdPacienteAndEstadoNot(Integer idPaciente, String estado);
+    List<Turno> findByIdPacienteAndEstadoNotIn(Integer idPaciente, List<String> estados);
 }
