@@ -143,7 +143,7 @@ public class TurnoServiceImpl implements TurnoService {
     @Override
     public void enviarCalificacion(CalificacionRequest calificacionRequest) {
         Turno turno = turnoRepository.findById(calificacionRequest.getId()).get();
-        turno.setCalificacion(calificacionRequest.getCalificacion() + "/10");s
+        turno.setCalificacion(calificacionRequest.getCalificacion() + "/10");
         turnoRepository.save(turno);
     }
 
