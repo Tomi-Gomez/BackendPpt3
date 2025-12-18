@@ -29,18 +29,13 @@ public class PacienteServiceImpl implements PacienteService {
         if (!pacientesExistentes.isEmpty()) {
             throw new PacienteExistenteException("El paciente ya existe");
         }
-
         String credencial = "";
-
-        // Caso titular
         if (usuarioRequest.getDniTitular() == 0) {
             String ultimaCredencial = repository.findUltimaCredencial();
             int ultimoNumero;
-
             if (ultimaCredencial != null && !ultimaCredencial.isBlank()) {
                 String[] parts = ultimaCredencial.split("-");
                 ultimoNumero = Integer.parseInt(parts[0]);
-
                 if (parts.length == 4) {
                     ultimoNumero = ultimoNumero + 1;
                     parts[0] = String.format("%011d", ultimoNumero);
@@ -50,21 +45,18 @@ public class PacienteServiceImpl implements PacienteService {
                 }
             } else {
                 String padded = String.format("%018d", 0);
-
                 credencial = String.format("%s-%s-%s-%s",
                         padded.substring(0, 11),
                         padded.substring(11, 14),
                         padded.substring(14, 16),
                         padded.substring(16, 18)
                 );
-
                 String[] parts = credencial.split("-");
                 parts[1] = "003";
                 parts[0] = String.format("%011d", 1);
                 credencial = String.join("-", parts);
             }
         }
-        // Caso familiar / dependiente
         else {
             List<Paciente> pacienteTitular = repository.findByDni(usuarioRequest.getDniTitular());
             credencial = pacienteTitular.get(0).getCredencial();
@@ -110,15 +102,14 @@ public class PacienteServiceImpl implements PacienteService {
     public PacienteResponse updatedPaciente(UsuarioRequest usuarioRequest) {
         Paciente paciente = repository.findById(usuarioRequest.getId())
                 .orElseThrow(() -> new UsuarioNotFoundException("Usuario no encontrado"));
-
         paciente.setNombre(usuarioRequest.getNombre());
         paciente.setApellido(usuarioRequest.getApellido());
         paciente.setEmail(usuarioRequest.getEmail());
         paciente.setTelefono(usuarioRequest.getTelefono());
         paciente.setAvatar(usuarioRequest.getAvatar());
         paciente.setDni(usuarioRequest.getDni());
-
         repository.save(paciente);
+
         return PacienteResponse.fromPaciente(paciente);
     }
 }

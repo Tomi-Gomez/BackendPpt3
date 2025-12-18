@@ -35,10 +35,8 @@ public class ReporteServiceImp implements ReportService {
 
     @Autowired
     private PacienteRepository pacienteRepository;
-
     @Autowired
     private MedicoRespository medicoRespository;
-
     @Autowired
     private TurnoRepository turnoRepository;
     @Autowired
@@ -49,11 +47,9 @@ public class ReporteServiceImp implements ReportService {
         try {
             Optional<Paciente> paciente = pacienteRepository.findById(turno.getIdPaciente());
             Optional<Medico> medico = medicoRespository.findById(turno.getIdMedico());
-
             // cargar el jrxml como InputStream desde resources
             InputStream reportStream = new ClassPathResource("templates/report/ReportTurno.jrxml").getInputStream();
             JasperReport report = JasperCompileManager.compileReport(reportStream);
-
             LocalDate fechaActual = LocalDate.now();
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -69,12 +65,9 @@ public class ReporteServiceImp implements ReportService {
             parameters.put("HORA_TURNO", turno.getHora());
             parameters.put("MEDICO", medico.get().getNombre() + " " + medico.get().getApellido());
             parameters.put("imageDir", "classpath:/static/images/");
-
             JasperPrint print = JasperFillManager.fillReport(report, parameters, new JREmptyDataSource());
 
-            // exportar a bytes en lugar de archivo
             return JasperExportManager.exportReportToPdf(print);
-
         } catch (PacienteNotFoundException e) {
             log.error(e.getMessage());
             throw new PacienteNotFoundException("No se encontro el paciente solicitado" + e);
@@ -93,21 +86,14 @@ public class ReporteServiceImp implements ReportService {
             LocalDate fechaActual = LocalDate.now();
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
             List<Turno> listaTurnoReporte = turnoRepository.findTurnosByFechaBetween(fechaInicio, fechaFinal);
-
-            // Traer todos los médicos en una sola consulta
             Map<Integer, Medico> medicosMap = medicoRespository.findAll()
                     .stream()
                     .collect(Collectors.toMap(Medico::getId, m -> m));
-
-            // Agrupar por médico usando stream
             Map<Medico, Long> cantidadTurnoXMedico = listaTurnoReporte.parallelStream()
                     .map(t -> medicosMap.get(t.getIdMedico()))
                     .filter(Objects::nonNull)
                     .collect(Collectors.groupingBy(m -> m, Collectors.counting()));
-
-            // Generar DTOs
             List<ReporteMedicoDTO> reporte = cantidadTurnoXMedico.entrySet()
                     .stream()
                     .map(entry -> new ReporteMedicoDTO(
@@ -144,21 +130,14 @@ public class ReporteServiceImp implements ReportService {
     @Override
     public byte[] generarReporteMedicoXDia(String dia) {
         try {
-            //Cargar el jrxml como InputStream desde resources
             InputStream reportStream = new ClassPathResource("templates/report/ReporteDia.jrxml").getInputStream();
             JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
-
             List<Disponibilidad> disponibilidades = disponibilidadRepository.findAll();
-
             List<Disponibilidad> filtroDisponibilidades = disponibilidades.stream()
                     .filter(p -> p.getDias() != null && Arrays.asList(p.getDias().split(",")).contains(dia))
                     .toList();
-
-            // key seria la especialidad y el valor seria la lista de la disponibilidad
             Map<String, List<Disponibilidad>> agrupadoPorEspecialidad = filtroDisponibilidades.stream()
                     .collect(Collectors.groupingBy(Disponibilidad::getEspecialidad));
-
-
             List<ReporteDiaDTO> reporte = agrupadoPorEspecialidad.entrySet().stream()
                     .map(entry -> new ReporteDiaDTO(
                             entry.getValue().stream()
@@ -168,17 +147,14 @@ public class ReporteServiceImp implements ReportService {
                             entry.getKey()) // especialidad
                     )
                     .toList();
-
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reporte);
-
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("FECHA_ACTUAL", LocalDate.now().toString());
             parameters.put("HORA_ACTUAL", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
             parameters.put("DATOS_REPORTE", dataSource);
-
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-            return JasperExportManager.exportReportToPdf(jasperPrint);
 
+            return JasperExportManager.exportReportToPdf(jasperPrint);
         } catch(Exception e){
             log.error(e.getMessage());
             throw new RuntimeException("Error: " + e.getMessage());
@@ -190,12 +166,10 @@ public class ReporteServiceImp implements ReportService {
         try {
             InputStream reportStream = new ClassPathResource("templates/report/ReporteTurnosCancelados.jrxml").getInputStream();
             JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);
-
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
             Date periodoInicial = formato.parse(fechaInicio);
             Date periodoFinal = formato.parse(fechaFinal);
 
-            // Filtrar turnos cancelados en rango
             List<Turno> turnosCancelados = turnoRepository.findAll().stream()
                     .filter(t -> {
                         try {
@@ -209,18 +183,14 @@ public class ReporteServiceImp implements ReportService {
                     })
                     .collect(Collectors.toList());
 
-            //  Convertirlos a DTOs
             List<ReporteCanceladoDTO> reporte = new ArrayList<>();
-
             for (Turno t : turnosCancelados) {
                 String nombreMedico = medicoRespository.findById(t.getIdMedico())
                         .map(m -> m.getNombre() + " " + m.getApellido())
                         .orElse("Desconocido");
-
                 String nombrePaciente = pacienteRepository.findById(t.getIdPaciente())
                         .map(p -> p.getNombre() + " " + p.getApellido())
                         .orElse("Desconocido");
-
                 reporte.add(new ReporteCanceladoDTO(
                         t.getFecha(),
                         t.getHora(),
@@ -229,15 +199,13 @@ public class ReporteServiceImp implements ReportService {
                 ));
             }
 
-            //  Generar PDF
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(reporte);
-
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("FECHA_ACTUAL", LocalDate.now().toString());
             parameters.put("HORA_ACTUAL", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
             parameters.put("DATOS_REPORTE", dataSource);
-
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+
             return JasperExportManager.exportReportToPdf(jasperPrint);
 
         } catch (Exception e) {

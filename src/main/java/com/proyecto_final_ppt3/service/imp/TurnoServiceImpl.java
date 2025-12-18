@@ -26,34 +26,23 @@ import java.util.List;
 public class TurnoServiceImpl implements TurnoService {
 
     private TurnoRepository turnoRepository;
-
     private ReporteServiceImp reporteServiceImp;
-
     private EmailService emailService;
-
     private PacienteRepository pacienteRepository;
     private final MedicoRespository medicoRepository;
-
 
     @Override
     public TurnoResponse guardarTurno(TurnoRequest turnoRequest) {
         try {
             Turno turno = Turno.FromTurnoRequest(turnoRequest);
             log.info("Buscando paciente con idPaciente={}", turno.getIdPaciente());
-
             Turno finalTurno = turno;
             Paciente paciente = pacienteRepository.findById(turno.getIdPaciente())
                     .orElseThrow(() -> new RuntimeException("Paciente no encontrado con id " + finalTurno.getIdPaciente()));
             log.info("TurnoRequest recibido: {}", turnoRequest);
             log.info("Turno a guardar: {}", turno);
-
-            // 1. Guardar turno en DB (ya con id asignado)
             turno = turnoRepository.save(turno);
-            
-            // 2. Generar PDF
             byte[] pdfBytes = reporteServiceImp.generarReporteTurno(turno);
-
-            // 3. Enviar email al paciente
             emailService.sendTurnoPdfEmail(
                     paciente.getEmail(),
                     pdfBytes,
@@ -79,7 +68,6 @@ public class TurnoServiceImpl implements TurnoService {
     @Override
     public TurnoResponse updateObservaciones(Integer idTurno, TurnoRequest turnoRequest) {
         Turno turno = turnoRepository.findById(idTurno).get();
-        //aca se hace con el dto pero como no hay tiempo hay que hacer la vista gorda
         turno.setObservaciones(turnoRequest.getObservaciones());
         turnoRepository.save(turno);
 
@@ -106,7 +94,6 @@ public class TurnoServiceImpl implements TurnoService {
     @Override
     public List<TurnoDetalleResponse> getTurnosTomadosCSV(Integer dniMedico) {
         List<TurnoDetalleProjection> turnoDetalleDTO  = turnoRepository.findTurnosDetalleByMedicoId(dniMedico);
-
         return turnoDetalleDTO.stream().map(TurnoDetalleResponse::fromTurnoDetalleProjection).toList();
     }
 
@@ -125,7 +112,6 @@ public class TurnoServiceImpl implements TurnoService {
             Medico medico = medicoRepository.findById(t.getIdMedico()).orElse(null);
             Paciente paciente = pacienteRepository.findById(t.getIdPaciente()).orElse(null);
             TurnoResponse resp = new TurnoResponse();
-
             resp.setIdTurno(t.getId()); 
             resp.setFecha(t.getFecha());
             resp.setHora(t.getHora());
@@ -151,15 +137,13 @@ public class TurnoServiceImpl implements TurnoService {
         Turno turno = turnoRepository.findById(id).get();
         turno.setEstado("CANCELADO");
         turno.setCalificacion("");
-
         turnoRepository.save(turno);
     }
 
     @Override
     public void enviarCalificacion(CalificacionRequest calificacionRequest) {
         Turno turno = turnoRepository.findById(calificacionRequest.getId()).get();
-        turno.setCalificacion(calificacionRequest.getCalificacion() + "/10");
-
+        turno.setCalificacion(calificacionRequest.getCalificacion() + "/10");s
         turnoRepository.save(turno);
     }
 

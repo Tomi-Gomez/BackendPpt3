@@ -15,15 +15,13 @@ public class DisponibilidadRequest {
     private int id;
     private String desde;
     private String hasta;
-     @JsonProperty("id_medico")
+    @JsonProperty("id_medico")
     private Integer idMedico;
     private String especialidad;
     private String fecha;
     private List<String> dias;
 
     public static Disponibilidad toDisponibilidad(DisponibilidadRequest disponibilidadRequest) {
-
-         // Crear un objeto médico con solo el ID
         Medico medico = new Medico();
         medico.setId(disponibilidadRequest.getIdMedico());
 
@@ -34,7 +32,7 @@ public class DisponibilidadRequest {
                 .especialidad(disponibilidadRequest.getEspecialidad())
                 .fecha(disponibilidadRequest.getFecha())
                 .dias(String.join(",", disponibilidadRequest.getDias()))
-                .medico(medico) // ✅ relación correcta
+                .medico(medico)
                 .build();
     }
 }

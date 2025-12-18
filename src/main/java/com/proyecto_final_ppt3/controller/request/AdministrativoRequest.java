@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AdministrativoRequest {
-
     private String nombre;
     private String apellido;
     private Integer dni;
@@ -18,7 +17,7 @@ public class AdministrativoRequest {
     private String tipoUsuario;
     private Integer telefono;
 
-    public static Administrativo administrativo(AdministrativoRequest administrativoRequest){
+    public static Administrativo administrativo(AdministrativoRequest administrativoRequest) {
         return Administrativo.builder()
                 .nombre(administrativoRequest.getNombre())
                 .apellido(administrativoRequest.getApellido())

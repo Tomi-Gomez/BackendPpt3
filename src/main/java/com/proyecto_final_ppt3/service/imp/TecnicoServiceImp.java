@@ -15,7 +15,6 @@ import java.util.List;
 @Slf4j
 @Service
 public class TecnicoServiceImp implements TecnicoService {
-
 	@Autowired
 	private MedicoRespository medicoRespository;
 

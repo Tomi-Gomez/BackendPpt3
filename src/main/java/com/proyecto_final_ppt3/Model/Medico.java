@@ -44,7 +44,7 @@ public class Medico {
                 .matricula(medicoRequest.getMatricula())
                 .tipoUsuario(medicoRequest.getTipoUsuario())
                 .habilitacion(medicoRequest.getHabilitacion())
-                .avatar(medicoRequest.getAvatar()) 
+                .avatar(medicoRequest.getAvatar())
                 .build();
     }
 }

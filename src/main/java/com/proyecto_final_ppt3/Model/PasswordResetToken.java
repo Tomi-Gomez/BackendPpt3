@@ -2,8 +2,6 @@ package com.proyecto_final_ppt3.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-
 import java.time.LocalDateTime;
 
 @Entity

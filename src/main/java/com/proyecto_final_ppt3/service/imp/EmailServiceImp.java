@@ -21,7 +21,6 @@ public class EmailServiceImp implements EmailService {
     @Override
     public void sendPasswordResetEmail(String to, String token) {
         String resetLink = "http://localhost:4200/reset-password?token=" + token;
-
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("notificaciones.uom.clinica@gmail.com");
         message.setTo(to);
@@ -30,18 +29,14 @@ public class EmailServiceImp implements EmailService {
         mailSender.send(message);
     }
 
-    // 🚀 Nuevo método para enviar el PDF del turno
     @Override
     public void sendTurnoPdfEmail(String to, byte[] pdfBytes, String fileName) throws MessagingException {
         MimeMessage mensaje = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mensaje, true);
-
         helper.setFrom("notificaciones.uom.clinica@gmail.com");
         helper.setTo(to);
         helper.setSubject("Confirmación de Turno Médico");
         helper.setText("Adjunto encontrarás el comprobante de tu turno.");
-
-        // 📎 adjuntar PDF
         helper.addAttachment(fileName, new ByteArrayResource(pdfBytes));
 
         mailSender.send(mensaje);

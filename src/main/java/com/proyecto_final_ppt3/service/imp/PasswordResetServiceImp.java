@@ -34,20 +34,15 @@ public class PasswordResetServiceImp implements PasswordResetService {
         }
 
         Paciente paciente = pacienteOpt.get();
-
         // Generar token único
         String token = UUID.randomUUID().toString();
-
         // Construir y guardar token
         PasswordResetToken resetToken = PasswordResetToken.builder()
                 .token(token)
                 .expiryDate(LocalDateTime.now().plusMinutes(30))
                 .paciente(paciente)
                 .build();
-
         tokenRepository.save(resetToken);
-
-        // Enviar email real
         emailService.sendPasswordResetEmail(paciente.getEmail(), token);
 
         return new AuthResponse("Si el email está registrado, se enviaron las instrucciones");
@@ -57,15 +52,12 @@ public class PasswordResetServiceImp implements PasswordResetService {
     public AuthResponse resetPassword(String token, String newPassword) {
         PasswordResetToken resetToken = tokenRepository.findByToken(token)
                 .orElseThrow(() -> new IllegalArgumentException("El token no existe o ya fue usado."));
-
         if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
              throw new IllegalArgumentException("El token ha expirado.");
         }
-
         Paciente paciente = resetToken.getPaciente();
         paciente.setContrasenia(passwordEncoder.encode(newPassword));
         pacienteRepository.save(paciente);
-
         // Borrar token después de usarlo
         tokenRepository.delete(resetToken);
 

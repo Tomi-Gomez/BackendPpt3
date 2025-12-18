@@ -27,7 +27,7 @@ public class DisponibilidadController {
     @PostMapping("/guardarDisponibilidad")
     public ResponseEntity<DisponibilidadResponse> guardarDisponibilidad(@RequestBody DisponibilidadRequest request) {
         DisponibilidadResponse response = disponibilidadService.postGuardarDisponibilidad(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response); // 👈 cambia 200 → 201
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/disponibilidad/{idMedico}")
@@ -37,7 +37,6 @@ public class DisponibilidadController {
         if (disponibilidades.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok(disponibilidades.get(0));
     }
 }

@@ -19,7 +19,6 @@ public class PacienteController {
 
     private PacienteService paciente;
 
-
     @PostMapping("/insertar")
     public ResponseEntity<RegistroResponse> registrar(@RequestBody UsuarioRequest usuarioRequest) {
         return ResponseEntity.ok(paciente.registrar(usuarioRequest));

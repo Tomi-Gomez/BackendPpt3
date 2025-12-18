@@ -13,11 +13,8 @@ import com.proyecto_final_ppt3.controller.response.MedicoResponse;
 import com.proyecto_final_ppt3.handler.AdministrativoInsertException;
 import com.proyecto_final_ppt3.handler.MedicosNotFoundException;
 import com.proyecto_final_ppt3.service.AdministrativoService;
-
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +24,10 @@ import org.springframework.stereotype.Service;
 public class AdministrativoServiceImp implements AdministrativoService {
 
     private MedicoRespository medicoRespository;
-
     private AdministrativoRepository repository;
-
     private DisponibilidadRepository disponibilidadRepository;
-
     private final PasswordEncoder passwordEncoder;
 
-    //Cheuqear si esto esta bien, porque deberia poder
     @Override
     public Administrativo insertarAdmin(AdministrativoRequest administrativoRequest) {
         try {
@@ -84,7 +77,7 @@ public class AdministrativoServiceImp implements AdministrativoService {
             admin.setTipoUsuario("administrativo");
 
             repository.save(admin);
-            System.out.println("✅ Admin por defecto creado");
+            System.out.println("Admin por defecto creado");
         }
     }
 }

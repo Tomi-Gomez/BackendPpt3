@@ -11,11 +11,8 @@ import com.proyecto_final_ppt3.controller.response.LoginResponse;
 import com.proyecto_final_ppt3.handler.UsuarioNotFoundException;
 import com.proyecto_final_ppt3.service.LoginService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @AllArgsConstructor
@@ -23,17 +20,13 @@ import java.util.List;
 public class LoginServiceImpl implements LoginService {
 
     private PacienteRepository pacienteRepository;
-
     private MedicoRespository medicoRespository;
-
     private AdministrativoRepository administrativoRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<LoginResponse> login(LoginRequest loginRequest) {
         List<LoginResponse> loginResponse;
-
         switch (loginRequest.getTipoUsuario()) {
             case "Paciente":
                 List<Paciente> pacientes = pacienteRepository.findByDni(loginRequest.getDni());
@@ -48,15 +41,12 @@ public class LoginServiceImpl implements LoginService {
              
             case "medico":
                 List<Medico> medicos = medicoRespository.findByDni(loginRequest.getDni());
-
                 if (medicos.isEmpty()) {
                     throw new UsuarioNotFoundException("usuario no encontrado");
                 }
-
                 if (!passwordEncoder.matches(loginRequest.getContra(), medicos.get(0).getContrasenia())) {
                     throw new IllegalArgumentException("Contraseña incorrecta");
                 }
-
                 loginResponse = medicos.stream().map(LoginResponse::fromMedico).toList();
                 break;
             case "administrativo":
@@ -73,8 +63,6 @@ public class LoginServiceImpl implements LoginService {
             default:
                 return null;
         }
-
         return loginResponse;
     }
-
 }

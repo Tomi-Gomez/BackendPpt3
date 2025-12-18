@@ -7,7 +7,6 @@ import com.proyecto_final_ppt3.controller.response.DisponibilidadResponse;
 import com.proyecto_final_ppt3.service.DisponibilidadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -26,7 +25,6 @@ public class DisponibilidadServiceImp implements DisponibilidadService {
         } catch (Exception e) {
             throw new RuntimeException("Error en la busqueda de disponibilidades" + specialty, e);
         }
-
     }
 
     @Override

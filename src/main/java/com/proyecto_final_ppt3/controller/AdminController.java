@@ -19,7 +19,6 @@ public class AdminController {
 
     @Autowired
     private AdministrativoService administrativo;
-
     @Autowired
     private ReportService reportService;
 

@@ -21,7 +21,6 @@ public class TurnoController {
 
     private TurnoService turnoService;
 
-
     @PostMapping("/guardarTurno")
     public TurnoResponse guardarTurno(@RequestBody TurnoRequest turno) {
         return turnoService.guardarTurno(turno);
