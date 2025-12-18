@@ -10,6 +10,7 @@ import com.proyecto_final_ppt3.controller.request.TurnoRequest;
 import com.proyecto_final_ppt3.controller.response.TurnoDetalleResponse;
 import com.proyecto_final_ppt3.controller.response.TurnoResponse;
 import com.proyecto_final_ppt3.dto.TurnoDetalleProjection;
+import com.proyecto_final_ppt3.handler.MedicoNoHabilitadoException;
 import com.proyecto_final_ppt3.service.EmailService;
 import com.proyecto_final_ppt3.service.TurnoService;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import com.proyecto_final_ppt3.Repository.MedicoRespository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -35,6 +37,11 @@ public class TurnoServiceImpl implements TurnoService {
     public TurnoResponse guardarTurno(TurnoRequest turnoRequest) {
         try {
             Turno turno = Turno.FromTurnoRequest(turnoRequest);
+            Medico medico = medicoRepository.findById(turno.getIdMedico())
+                .orElseThrow(() -> new RuntimeException("Médico no encontrado"));
+            if (!medico.getHabilitacion()) {
+                throw new MedicoNoHabilitadoException("El médico no se encuentra habilitado");
+            }
             log.info("Buscando paciente con idPaciente={}", turno.getIdPaciente());
             Turno finalTurno = turno;
             Paciente paciente = pacienteRepository.findById(turno.getIdPaciente())
